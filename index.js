@@ -6,7 +6,7 @@ var http, options, proxy, url;
 http = require("http");
 url = require("url");
 proxy = url.parse(process.env.QUOTAGUARDSTATIC_URL);
-target  = url.parse("https://ap-gcrm-mms.herokuapp.com/");
+target  = url.parse("https://ap-gcrm-mms.herokuapp.com/Every8D");
 
 options = {
   hostname: proxy.hostname,
@@ -18,10 +18,10 @@ options = {
   }
 };
 
-http.get(options, function(res) {
-  res.pipe(process.stdout);
-  return console.log("status code", res.statusCode);
-});
+// http.get(options, function(res) {
+//   res.pipe(process.stdout);
+//   return console.log("status code", res.statusCode);
+// });
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
@@ -38,5 +38,6 @@ app.get('/', (req, res) => {
 
 app.get('/Every8D', (req, res) => {
     console.log('Accessing Every8D');
+    res.pipe(process.stdout);
     res.render('every8D.html');
 })
