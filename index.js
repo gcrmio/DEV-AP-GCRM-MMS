@@ -2,15 +2,6 @@ var express = require('express');
 var request = require('request');
 var app = express();
 
-var options = {
-    proxy: process.env.QUOTAGUARDSTATIC_URL,
-    url: app.get('/Every8D'),
-    headers:{
-        'User-Agent': 'node.js'
-    }
-};
-
-
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
