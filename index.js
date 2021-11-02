@@ -2,7 +2,6 @@
 var express = require('express');
 var request = require('request');
 var app = express();
-require('dotenv').load({silent: true});
 
 var url = require('url');
 var HttpsProxyAgent = rerquire('https-proxy-agent');
