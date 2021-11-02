@@ -1,29 +1,21 @@
 var express = require('express');
 var request = require('request');
 var app = express();
-var http, options, proxy, url;
-
-http = require("http");
-
-url = require("url");
-
-proxy = url.parse(process.env.QUOTAGUARDSTATIC_URL);
-target  = url.parse("https://ap-gcrm-mms.herokuapp.com/");
-
-options = {
-  hostname: proxy.hostname,
-  port: proxy.port || 80,
-  path: target.href,
-  headers: {
-    "Proxy-Authorization": "Basic " + (new Buffer(proxy.auth).toString("base64")),
-    "Host" : target.hostname
-  }
+var options = {
+    proxy: process.env.QUOTAGUARDSTATIC_URL,
+    url: 'https://api.github.com/repos/joyent/node',
+    headers: {
+        'User-Agent': 'node.js'
+    }
 };
 
-http.get(options, function(res) {
-  res.pipe(process.stdout);
-  return console.log("status code", res.statusCode);
-});
+function callback(error, response, body) {
+    if (!error && response.statusCode == 200) {
+        console.log(body);
+    }
+}
+
+request(options, callback);
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
