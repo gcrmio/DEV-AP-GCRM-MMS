@@ -1,6 +1,8 @@
 var express = require('express');
 var request = require('request');
 var app = express();
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
 app.set("port", (process.env.PORT || 3000));
 app.listen(app.get("port"),
