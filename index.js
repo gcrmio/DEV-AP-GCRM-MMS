@@ -1,19 +1,7 @@
 var express = require('express');
 var request = require('request');
 var app = express();
-var options = {
-    proxy: process.env.QUOTAGUARDSTATIC_URL,
-    url: 'https://api.github.com/repos/joyent/node',
-    headers: {
-        'User-Agent': 'node.js'
-    }
-};
 
-function callback(error, response, body) {
-    if (!error && response.statusCode == 200) {
-        console.log(body);
-    }
-}
 
 request(options, callback);
 
@@ -32,5 +20,18 @@ app.get('/', (req, res) => {
 
 app.get('/Every8D', (req, res) => {
     console.log('Accessing Every8D')
+    var options = {
+        proxy: process.env.QUOTAGUARDSTATIC_URL,
+        url: 'https://api.github.com/repos/joyent/node',
+        headers: {
+            'User-Agent': 'node.js'
+        }
+    };
+    
+    function callback(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body);
+        }
+    }
     res.render('every8D.html');
 })
