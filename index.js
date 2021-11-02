@@ -1,34 +1,30 @@
-'use strict';
 var express = require('express');
 var request = require('request');
 var app = express();
 
-var url = require('url');
-var HttpsProxyAgent = require('https-proxy-agent');
-var request = require('request');
+var http, options, proxy, url;
 
-var testEndpoint = 'https://ap-gcrm-mms.herokuapp.com/';
-var proxy = process.env.QUOTAGUARDSHIELD_URL;
-var agent = new HttpsProxyAgent(proxy);
-var options = {
-    url: url.parse(testEndpoint),
-    agent
+http = require("http");
+
+url = require("url");
+
+proxy = url.parse(process.env.QUOTAGUARDSTATIC_URL);
+target  = url.parse("https://ap-gcrm-mms.herokuapp.com/");
+
+options = {
+  hostname: proxy.hostname,
+  port: proxy.port || 80,
+  path: target.href,
+  headers: {
+    "Proxy-Authorization": "Basic " + (new Buffer(proxy.auth).toString("base64")),
+    "Host" : target.hostname
+  }
 };
 
-function callback(error, response, body){
-    if(!error && response.statusCode == 200){
-        console.log('body: ', body);
-    } else{
-        console.log('error: ', error);
-    }
-}
-
-try {
-    console.log('CALLBACK =====================================');
-    request(options, callback); 
-} catch (error) {
-    console.log('there was an error');
-}
+http.get(options, function(res) {
+  res.pipe(process.stdout);
+  return console.log("status code", res.statusCode);
+});
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
