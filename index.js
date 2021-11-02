@@ -4,7 +4,7 @@ var request = require('request');
 var app = express();
 
 var url = require('url');
-var HttpsProxyAgent = rerquire('https-proxy-agent');
+var HttpsProxyAgent = require('https-proxy-agent');
 var request = require('request');
 
 var testEndpoint = 'https://ap-gcrm-mms.herokuapp.com/';
