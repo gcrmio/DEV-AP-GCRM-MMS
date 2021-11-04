@@ -135,6 +135,8 @@ function sendMsg(subject, msg, dest, time){
             "PWD": password,
         },
         body: JSON.stringify({
+            UID: uid,
+            PWD: password,
             SB: subject,
             MSG: msg,
             DEST: dest,
@@ -142,7 +144,7 @@ function sendMsg(subject, msg, dest, time){
         }),
     },
         function (err, res, html) {
-            if (err) console.log('error'+`\n`+err);
+            if (err) console.log(err);
             else { resultCode = 200; console.log(html); }
           }
         );
