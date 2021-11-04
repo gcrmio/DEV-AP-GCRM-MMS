@@ -3,7 +3,7 @@ var request = require('request');
 var urlencode = require('urlencode');
 var app = express();
 var pg = require('pg');
-global.fetch = require("node-fetch");
+
 
 var http, options, proxy, url;
 http = require("http");
@@ -129,14 +129,14 @@ function dbSelect(){
   }
 
 function sendMsg(subject, msg, dest, time){
+    import fetch from 'node-fetch';
     const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
     var resultCode = 404;
-    const method = 'POST';
 
     fetch(url, {
-        method: method,
+
         headers:{
             'Content-Type': 'x-www-form-urlencoded; charset=UTF-8'
         },
