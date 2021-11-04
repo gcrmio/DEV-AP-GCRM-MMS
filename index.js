@@ -99,18 +99,28 @@ function dbSelect(){
       if(err){
         console.log(err.stack);
       } else {
-        console.log(res.rows);
+        //console.log(res.rows);
         for(const row of res.rows){
           var cust_id = urlencode(row.cust_id);
+          console.log('cust_id' + cust_id);
           var dest = urlencode(row.phone_no);
+          console.log('phone_no' + phone_no);
           var msg_id = urlencode(row.msg_id);
+          console.log('msg_id' + msg_id);
           var subject = urlencode(row.msg_subject_adj);
+          console.log('msg_subject_adj' + msg_subject_adj);
           var msg = urlencode(row.msg_body_text_adj);
+          console.log('msg_body_text_adj' + msg_body_text_adj);
           var msg_body_image_adj_file = urlencode(row.msg_body_image_adj_file);
+          console.log('msg_body_image_adj_file' + msg_body_image_adj_file);
           var msg_type = urlencode(row.msg_type);
+          console.log('msg_type' + msg_type);
           var plan_date = urlencode(row.plan_date);
+          console.log('plan_date' + plan_date);
           var time = urlencode(row.send_date);
+          console.log('send_date' + send_date);
           var success_yn = urlencode(row.success_yn);
+          console.log('success_yn' + success_yn);
 
           console.log("Call sendMsg function====================================================");
           sendMsg(subject, msg, dest, time);
@@ -131,9 +141,11 @@ function sendMsg(subject, msg, dest, time){
         method: method,
         uri: url,
         headers:{
+            "UID": uid,
             "PWD": password,
         },
         body: JSON.stringify({
+            UID: uid,
             PWD: password,
             SB: subject,
             MSG: msg,
