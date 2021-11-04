@@ -139,14 +139,14 @@ function sendMsg(subject, msg, dest, time){
         headers:{
             'Content-Type': 'application/json',
         },
-        body: {
+        body: JSON.stringify({
             UID: uid,
             PWD: password,
             SB: subject,
             MSG: msg,
             DEST: dest,
             ST: time
-        }
+        })
     },
         function (err, res, html) {
             if (err) console.log(err);
