@@ -102,25 +102,25 @@ function dbSelect(){
         //console.log(res.rows);
         for(const row of res.rows){
           var cust_id = urlencode(row.cust_id);
-          console.log('cust_id ' + cust_id);
+        //   console.log('cust_id ' + cust_id);
           var dest = urlencode(row.phone_no);
-          console.log('phone_no ' + dest);
+        //   console.log('phone_no ' + dest);
           var msg_id = urlencode(row.msg_id);
-          console.log('msg_id ' + msg_id);
+        //   console.log('msg_id ' + msg_id);
           var subject = urlencode(row.msg_subject_adj);
-          console.log('msg_subject_adj ' + subject);
+        //   console.log('msg_subject_adj ' + subject);
           var msg = urlencode(row.msg_body_text_adj);
-          console.log('msg_body_text_adj ' + msg);
+        //   console.log('msg_body_text_adj ' + msg);
           var msg_body_image_adj_file = urlencode(row.msg_body_image_adj_file);
-          console.log('msg_body_image_adj_file ' + msg_body_image_adj_file);
+        //   console.log('msg_body_image_adj_file ' + msg_body_image_adj_file);
           var msg_type = urlencode(row.msg_type);
-          console.log('msg_type ' + msg_type);
+        //   console.log('msg_type ' + msg_type);
           var plan_date = urlencode(row.plan_date);
-          console.log('plan_date ' + plan_date);
+        //   console.log('plan_date ' + plan_date);
           var time = urlencode(row.send_date);
-          console.log('send_date ' + time);
+        //   console.log('send_date ' + time);
           var success_yn = urlencode(row.success_yn);
-          console.log('success_yn ' + success_yn);
+        //   console.log('success_yn ' + success_yn);
 
           console.log("Call sendMsg function====================================================");
           sendMsg(subject, msg, dest, time);
@@ -140,18 +140,12 @@ function sendMsg(subject, msg, dest, time){
     request({
         method: method,
         uri: url,
-        headers:{
-            "UID": uid,
-            "PWD": password,
-        },
-        body: JSON.stringify({
-            UID: uid,
-            PWD: password,
-            SB: subject,
-            MSG: msg,
-            DEST: dest,
-            ST: time
-        }),
+        UID: uid,
+        PWD: password,
+        Sb: subject,
+        MSG: msg,
+        DEST: dest,
+        ST: time
     },
         function (err, res, html) {
             if (err) console.log(err);
