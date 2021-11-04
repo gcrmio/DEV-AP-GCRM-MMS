@@ -126,7 +126,11 @@ function sendMsg(subject, msg, dest, time){
     var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ST='+time;
     request.get({
         url: geturl
-    }, function(error, response, body){
-        console.log(response.body);
+    }, function(error, response, html){
+        if(error){
+            console.log(error);
+        }
+        console.log('Received Server Data!');
+        console.log(html);
     })
 }
