@@ -107,8 +107,8 @@ function dbSelect(){
           var msg = row.msg_body_text_adj;
           var msg_body_image_adj_file = row.msg_body_image_adj_file;
           var msg_type = row.msg_type;
-          var time = row.plan_date;
-          var send_date = row.send_date;
+          var plan_date = row.plan_date;
+          var time = row.send_date;
           var success_yn = row.success_yn;
 
           console.log("Call sendMsg function====================================================");
@@ -125,7 +125,7 @@ function sendMsg(subject, msg, dest, time){
     const uid = process.env.Euid;
     const password = process.env.Epassword;
     try {
-        const result = rp({
+        const result = await rp({
             uri: url,
             method: 'GET',
             qs: {
