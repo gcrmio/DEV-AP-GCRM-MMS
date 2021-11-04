@@ -129,7 +129,7 @@ function dbSelect(){
   }
 
 function sendMsg(subject, msg, dest, time){
-    import fetch from 'node-fetch';
+    const fetch = require('node-fetch');
     const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
