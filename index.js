@@ -121,7 +121,7 @@ function dbSelect(){
   }
 
 function sendMsg(subject, msg, dest, time){
-    const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
+    const url = 'https://fb55d2bb17e433b1f789c1b4.getstatica.com/API21/HTTP/sendSMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
 
