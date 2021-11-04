@@ -114,7 +114,7 @@ function dbSelect(){
           console.log("Call sendMsg function====================================================");
           sendMsg(subject, msg, dest, time);
         }
-        // console.log('*************************************************************');
+        console.log('*************************************************************');
         // console.log(res.rows);
       }
     })
@@ -125,7 +125,8 @@ function sendMsg(subject, msg, dest, time){
     const uid = process.env.Euid;
     const password = process.env.Epassword;
     try {
-        const result = await rp({
+        //const result = await rp({
+        const result = rp({
             uri: url,
             method: 'GET',
             qs: {
