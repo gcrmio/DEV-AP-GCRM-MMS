@@ -134,12 +134,12 @@ function sendMsg(subject, msg, dest, time){
             UID: uid,
             PWD: password
         },
-        body: {
+        body: JSON.stringify({
             SB: subject,
             MSG: msg,
             DEST: dest,
             ST: time
-        },
+        }),
     },
         function (err, res, html) {
             if (err) console.log(err);
