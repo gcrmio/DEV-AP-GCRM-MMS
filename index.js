@@ -1,5 +1,6 @@
 var express = require('express');
 var request = require('request');
+var urlencode = require('urlencode');
 var app = express();
 var pg = require('pg');
 const rp = require('request-promise');
@@ -100,16 +101,16 @@ function dbSelect(){
       } else {
         console.log(res.rows);
         for(const row of res.rows){
-          var cust_id = row.cust_id;
-          var dest = row.phone_no;
-          var msg_id = row.msg_id;
-          var subject = row.msg_subject_adj;
-          var msg = row.msg_body_text_adj;
-          var msg_body_image_adj_file = row.msg_body_image_adj_file;
-          var msg_type = row.msg_type;
-          var plan_date = row.plan_date;
-          var time = row.send_date;
-          var success_yn = row.success_yn;
+          var cust_id = urlencode(row.cust_id);
+          var dest = urlencode(row.phone_no);
+          var msg_id = urlencode(row.msg_id);
+          var subject = urlencode(row.msg_subject_adj);
+          var msg = urlencode(row.msg_body_text_adj);
+          var msg_body_image_adj_file = urlencode(row.msg_body_image_adj_file);
+          var msg_type = urlencode(row.msg_type);
+          var plan_date = urlencode(row.plan_date);
+          var time = urlencode(row.send_date);
+          var success_yn = urlencode(row.success_yn);
 
           console.log("Call sendMsg function====================================================");
           sendMsg(subject, msg, dest, time);
