@@ -132,12 +132,12 @@ function sendMsg(subject, msg, dest, time){
     const uid = process.env.Euid;
     const password = process.env.Epassword;
     var resultCode = 404;
-    const method = "GET";
+    const method = 'GET';
     request({
         method: method,
         uri: url,
         headers:{
-            'Content-Type': 'application/json',
+            'Content-Type': 'x-www-form-urlencoded',
         },
         body: JSON.stringify({
             UID: uid,
