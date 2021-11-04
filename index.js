@@ -3,6 +3,7 @@ var request = require('request');
 var app = express();
 var pg = require('pg');
 const rp = require('request-promise');
+const { send } = require('process');
 
 var http, options, proxy, url;
 http = require("http");
@@ -110,12 +111,8 @@ function dbSelect(){
           var send_date = row.send_date;
           var success_yn = row.success_yn;
 
-          try {
-            sendMsg(subject, msg, dest, time);
-            console.log(sid+' has successfully sent');
-          } catch (error) {
-            console.log('send message error');
-          }
+          console.log("Call sendMsg function====================================================");
+          sendMsg(subject, msg, deest, time);
         }
         // console.log('*************************************************************');
         // console.log(res.rows);
