@@ -3,8 +3,6 @@ var request = require('request');
 var urlencode = require('urlencode');
 var app = express();
 var pg = require('pg');
-const rp = require('request-promise');
-const { send } = require('process');
 
 var http, options, proxy, url;
 http = require("http");
@@ -130,26 +128,25 @@ function dbSelect(){
   }
 
 function sendMsg(subject, msg, dest, time){
-    console.log("+++++++++++++++++++");
-    console.log(subject);
-    console.log(msg);
-    console.log(dest);
-    console.log(time);
-    console.log("+++++++++++++++++++");
     const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
-    console.log(uid);
-    console.log(password);
     var resultCode = 404;
     const method = "GET";
     request({
         method: method,
         uri: url,
-        UID: uid,
-        PWD: password,
-        MSG: msg,
-        DEST: dest
+        headers:{
+            'Content-Type': 'application/json',
+        },
+        body: {
+            UID: uid,
+            PWD: password,
+            SB: subject,
+            MSG: msg,
+            DEST: dest,
+            ST: time
+        }
     },
         function (err, res, html) {
             if (err) console.log(err);
