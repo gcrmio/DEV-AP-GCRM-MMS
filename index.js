@@ -120,41 +120,29 @@ function dbSelect(){
     })
   }
 
-async function sendMsg(subject, msg, dest, time){
+function sendMsg(subject, msg, dest, time){
     const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
-    console.log('send message +++++++++++++++++++++++++++++++++++++++++++++++++=');
-    try {
-        const result = await rp({
-            uri: url,
-            method: 'GET',
-            qs: {
-                UID: uid,
-                PWD: password,
-                SB: subject,
-                MSG: msg,
-                DEST: dest,
-                ST: time,
-            },
-        });
-        const temp = result.split(',');
-        if (temp.length !== 5) {
-            return {
-                error: `return format error: ${result}`,
-            };
-        }
-        return {
-            credit: temp[0],
-            sended: temp[1],
-            cost: temp[2],
-            unsend: temp[3],
-            batch: temp[4],
-            error: null,
-        };
-    } catch(e) {
-        return {
-            error: e.message,
-        };
-    }
+    const method = "GET";
+    request({
+        method: method,
+        uri: url,
+        headers:{
+            UID: uid,
+            PWD: password
+        },
+        body: {
+            SB: subject,
+            MSG: msg,
+            DEST: dest,
+            ST: time
+        },
+    },
+        function (err, res, html) {
+            if (err) console.log(err);
+            else { resultCode = 200; console.log(html); }
+          }
+        );
+        return resultCode;
 }
