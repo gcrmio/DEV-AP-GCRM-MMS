@@ -3,6 +3,7 @@ var request = require('request');
 var urlencode = require('urlencode');
 var app = express();
 var pg = require('pg');
+const fetch = require('node-fetch');
 
 var http, options, proxy, url;
 http = require("http");
@@ -132,8 +133,8 @@ function sendMsg(subject, msg, dest, time){
     const uid = process.env.Euid;
     const password = process.env.Epassword;
     var resultCode = 404;
-    const method = 'GET';
-    
+    const method = 'POST';
+
     fetch(url, {
         method: method,
         headers:{
