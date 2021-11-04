@@ -126,6 +126,8 @@ function sendMsg(subject, msg, dest, time){
     const password = process.env.Epassword;
 
     var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ST='+time;
+    console.log(geturl);
+    console.log('======================');
     request.get({
         url: geturl
     }, function(error, response, html){
