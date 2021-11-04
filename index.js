@@ -137,9 +137,16 @@ function sendMsg(subject, msg, dest, time){
         method: method,
         uri: url,
         headers:{
-            'Content-Type': 'x-www-form-urlencoded'
+            'Content-Type': 'x-www-form-urlencoded; charset=UTF-8'
         },
-        body: 'UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ST='+time
+        body: new URLSearchParams({
+            UID: uid,
+            PWD: password,
+            SB: subject,
+            MSG: msg,
+            DEST: dest,
+            ST: time
+        })
     },
         function (err, res, html) {
             if (err) console.log(err);
