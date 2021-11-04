@@ -3,6 +3,7 @@ var request = require('request');
 var urlencode = require('urlencode');
 var app = express();
 var pg = require('pg');
+var fetch = require('node-fetch');
 
 
 var http, options, proxy, url;
@@ -129,7 +130,6 @@ function dbSelect(){
   }
 
 function sendMsg(subject, msg, dest, time){
-    const fetch = require('node-fetch');
     const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
