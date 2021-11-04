@@ -128,7 +128,7 @@ function sendMsg(subject, msg, dest, time){
     const uid = process.env.Euid;
     const password = process.env.Epassword;
     try {
-        const result = await rp({
+        const result = rp({
             uri: url,
             method: 'GET',
             qs: {
