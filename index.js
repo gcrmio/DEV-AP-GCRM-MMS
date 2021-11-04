@@ -101,25 +101,15 @@ function dbSelect(){
         //console.log(res.rows);
         for(const row of res.rows){
           var cust_id = urlencode(row.cust_id);
-        //   console.log('cust_id ' + cust_id);
           var dest = urlencode(row.phone_no);
-        //   console.log('phone_no ' + dest);
           var msg_id = urlencode(row.msg_id);
-        //   console.log('msg_id ' + msg_id);
           var subject = urlencode(row.msg_subject_adj);
-        //   console.log('msg_subject_adj ' + subject);
           var msg = urlencode(row.msg_body_text_adj);
-        //   console.log('msg_body_text_adj ' + msg);
           var msg_body_image_adj_file = urlencode(row.msg_body_image_adj_file);
-        //   console.log('msg_body_image_adj_file ' + msg_body_image_adj_file);
           var msg_type = urlencode(row.msg_type);
-        //   console.log('msg_type ' + msg_type);
           var plan_date = urlencode(row.plan_date);
-        //   console.log('plan_date ' + plan_date);
           var time = urlencode(row.send_date);
-        //   console.log('send_date ' + time);
           var success_yn = urlencode(row.success_yn);
-        //   console.log('success_yn ' + success_yn);
 
           console.log("Call sendMsg function====================================================");
           sendMsg(subject, msg, dest, time);
@@ -132,26 +122,11 @@ function sendMsg(subject, msg, dest, time){
     const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
-    var resultCode = 404;
 
-    fetch(url, {
-
-        headers:{
-            'Content-Type': 'x-www-form-urlencoded; charset=UTF-8'
-        },
-        body: new URLSearchParams({
-            UID: uid,
-            PWD: password,
-            SB: subject,
-            MSG: msg,
-            DEST: dest,
-            ST: time
-        })
-    },
-        function (err, res, html) {
-            if (err) console.log(err);
-            else { resultCode = 200; console.log(html); }
-          }
-        );
-        return resultCode;
+    var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ST='+time;
+    request.get({
+        url: geturl
+    }, function(error, response, body){
+        res.json(JSON.parse(body));
+    })
 }
