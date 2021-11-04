@@ -132,7 +132,7 @@ function sendMsg(subject, msg, dest, time){
         uri: url,
         headers:{
             UID: uid,
-            PWD: password
+            PWD: password,
         },
         body: JSON.stringify({
             SB: subject,
