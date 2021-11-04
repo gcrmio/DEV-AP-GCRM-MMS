@@ -123,8 +123,8 @@ function dbSelect(){
 
 function sendMsg(subject, msg, dest, time){
     const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
-    const uid = process.env.Euid;
-    const password = process.env.Epassword;
+    const uid = 'Amore_Test';
+    const password = 'Amoretest2021';
     var resultCode = 404;
     const method = "GET";
     request({
