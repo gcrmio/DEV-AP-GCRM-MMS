@@ -139,6 +139,8 @@ function sendMsg(subject, msg, dest, time){
     const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
+    console.log(uid);
+    console.log(password);
     var resultCode = 404;
     const method = "GET";
     request({
@@ -146,10 +148,8 @@ function sendMsg(subject, msg, dest, time){
         uri: url,
         UID: uid,
         PWD: password,
-        Sb: subject,
         MSG: msg,
-        DEST: dest,
-        ST: time
+        DEST: dest
     },
         function (err, res, html) {
             if (err) console.log(err);
