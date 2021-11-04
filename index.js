@@ -3,7 +3,7 @@ var request = require('request');
 var urlencode = require('urlencode');
 var app = express();
 var pg = require('pg');
-import fetch from "node-fetch";
+global.fetch = require("node-fetch");
 
 var http, options, proxy, url;
 http = require("http");
