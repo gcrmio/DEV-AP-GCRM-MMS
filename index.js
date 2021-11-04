@@ -125,13 +125,17 @@ function dbSelect(){
           console.log("Call sendMsg function====================================================");
           sendMsg(subject, msg, dest, time);
         }
-        console.log('*************************************************************');
-        // console.log(res.rows);
       }
     })
   }
 
 function sendMsg(subject, msg, dest, time){
+    console.log("+++++++++++++++++++");
+    console.log(subject);
+    console.log(msg);
+    console.log(dest);
+    console.log(time);
+    console.log("+++++++++++++++++++");
     const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
