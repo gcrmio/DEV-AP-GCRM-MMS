@@ -133,9 +133,9 @@ function sendMsg(subject, msg, dest, time){
     const password = process.env.Epassword;
     var resultCode = 404;
     const method = 'GET';
-    request({
+    
+    fetch(url, {
         method: method,
-        uri: url,
         headers:{
             'Content-Type': 'x-www-form-urlencoded; charset=UTF-8'
         },
