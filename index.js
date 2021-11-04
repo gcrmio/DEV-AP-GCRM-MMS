@@ -2,6 +2,7 @@ var express = require('express');
 var request = require('request');
 var app = express();
 var pg = require('pg');
+const rp = require('request-promise');
 
 var http, options, proxy, url;
 http = require("http");
@@ -77,49 +78,85 @@ app.get('/pgSelect', (req, res) => {
       }
 })
 
+app.get('/sendMsg', (req, res) => {
+    try {
+        console.log("sendMsg=======================================");
+        dbSelect();
+        res.send('Send Msg Complete!');
+    } catch (error) {
+        console.log('There was an error!');
+    }
+})
+
 //PG_SELECT FROM transmit
 function dbSelect(){
+    
     const sql = `SELECT cust_id, phone_no, msg_id, msg_subject_adj, msg_body_text_adj, msg_body_image_adj_file, msg_type, plan_date, send_date, success_yn FROM transmit`
   
     client.query(sql, (err, res) => {
       if(err){
         console.log(err.stack);
       } else {
-        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
         console.log(res.rows);
-        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
         for(const row of res.rows){
           var cust_id = row.cust_id;
-          var phone_no = row.phone_no;
+          var dest = row.phone_no;
           var msg_id = row.msg_id;
-          var msg_subject_adj = row.msg_subject_adj;
-          var msg_body_text_adj = row.msg_body_text_adj;
+          var subject = row.msg_subject_adj;
+          var msg = row.msg_body_text_adj;
           var msg_body_image_adj_file = row.msg_body_image_adj_file;
           var msg_type = row.msg_type;
-          var plan_date = row.plan_date;
+          var time = row.plan_date;
           var send_date = row.send_date;
           var success_yn = row.success_yn;
 
-          console.log('length of cust_id = '+cust_id.length);
-          console.log('length of phone_no = '+phone_no.length);
-          console.log('length of msg_id = '+msg_id.length);
-          console.log('length of msg_subject_adj = '+msg_subject_adj.length);
-          console.log('length of msg_body_text_adj = '+msg_body_text_adj.length);
-          console.log('length of msg_body_image_adj_file = '+msg_body_image_adj_file.length);
-          console.log('length of msg_type = '+msg_type.length);
-          console.log('length of plan_date = '+plan_date.length);
-          console.log('length of send_date = '+send_date.length);
-          console.log('length of success_yn = '+success_yn.length);
-
-        //   try {
-            // send_message(mobile, sb, msg);
-            // console.log(sid+' has successfully sent');
-        //   } catch (error) {
-            // console.log('send message error');
-        //   }
+          try {
+            sendMsg(subject, msg, dest, time);
+            console.log(sid+' has successfully sent');
+          } catch (error) {
+            console.log('send message error');
+          }
         }
         // console.log('*************************************************************');
         // console.log(res.rows);
       }
     })
   }
+
+function sendMsg(subject, msg, dest, time){
+    const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
+    const uid = process.env.Euid;
+    const password = process.env.Epassword;
+    try {
+        const result = await rp({
+            uri: url,
+            method: 'GET',
+            qs: {
+                UID: uid,
+                PWD: password,
+                SB: subject,
+                MSG: msg,
+                DEST: dest,
+                ST: time,
+            },
+        });
+        const temp = result.split(',');
+        if (temp.length !== 5) {
+            return {
+                error: `return format error: ${result}`,
+            };
+        }
+        return {
+            credit: temp[0],
+            sended: temp[1],
+            cost: temp[2],
+            unsend: temp[3],
+            batch: temp[4],
+            error: null,
+        };
+    } catch(e) {
+        return {
+            error: e.message,
+        };
+    }
+}
