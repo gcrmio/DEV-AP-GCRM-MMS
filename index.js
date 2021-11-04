@@ -127,6 +127,6 @@ function sendMsg(subject, msg, dest, time){
     request.get({
         url: geturl
     }, function(error, response, body){
-        res.json(JSON.parse(body));
+        response.json(JSON.parse(body));
     })
 }
