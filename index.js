@@ -2,7 +2,7 @@ var express = require('express');
 var request = require('request');
 var app = express();
 var pg = require('pg');
-/*
+
 var http, options, proxy, url;
 http = require("http");
 url = require("url");
@@ -24,7 +24,7 @@ http.get(options, function(res) {
   res.pipe(process.stdout);
   return console.log("status code", res.statusCode);
 });
-*/
+
 
 //Render Every8D page
 app.engine('html', require('ejs').renderFile);
