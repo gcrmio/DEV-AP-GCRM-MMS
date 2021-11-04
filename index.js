@@ -1,7 +1,7 @@
 var express = require('express');
 var request = require('request');
 var app = express();
-
+//var pg = require('pg');
 var http, options, proxy, url;
 
 http = require("http");
@@ -38,6 +38,28 @@ function(){
 app.get('/', (req, res) => {
     res.send('AP-GCRM-MMS APP');
 })
+
+/*PG Setup
+const dbconfig = {
+    host: process.env.host,
+    user: process.env.user,
+    password: process.env.password,
+    database: process.env.database,
+    port: process.env.port,
+    ssl: {
+      rejectUnauthorized: false
+    }
+  }
+  console.log('PG Connect ==============================');
+  const client = new pg.Client(dbconfig);
+  client.connect(err =>{
+    if(err){
+      console.log('Failed to connect db ' + err);
+    } else {
+      console.log('Connect to db done!');
+    }
+  })
+  */
 
 app.get('/Every8D', (req, res) => {
     console.log('Accessing Every8D');
