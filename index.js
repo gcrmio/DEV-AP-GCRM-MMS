@@ -89,6 +89,16 @@ app.get('/sendMsg', (req, res) => {
     }
 })
 
+app.get('/credit', (req, res) => {
+    try {
+        console.log("credit=======================================");
+        receiveCredit();
+        res.send('credit Complete!');
+    } catch (error) {
+        console.log('There was an error!');
+    }
+})
+
 //PG_SELECT FROM transmit
 function dbSelect(){
     
@@ -121,11 +131,30 @@ function dbSelect(){
   }
 
 function sendMsg(subject, msg, dest, time){
-    const url = 'https://fb55d2bb17e433b1f789c1b4.getstatica.com/API21/HTTP/sendSMS.ashx';
+    const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
 
     var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ST='+time;
+    console.log(geturl);
+    console.log('======================');
+    request.get({
+        url: geturl
+    }, function(error, response, html){
+        if(error){
+            console.log(error);
+        }
+        console.log('Received Server Data!');
+        console.log(html);
+    })
+}
+
+function receiveCredit(){
+    const url = 'https://oms.every8d.com/API21/HTTP/getCredit.ashx';
+    const uid = process.env.Euid;
+    const password = process.env.Epassword;
+
+    var geturl = url+'?UID='+uid+'&PWD='+password;
     console.log(geturl);
     console.log('======================');
     request.get({
