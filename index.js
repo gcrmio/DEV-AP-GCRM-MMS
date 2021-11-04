@@ -106,7 +106,7 @@ function dbSelect(){
           var subject = urlencode(row.msg_subject_adj);
           var msg = urlencode(row.msg_body_text_adj);
           console.log('msg:'+`\n`+msg);
-          console.log(length(msg)+ `\n`);
+          console.log('msg length: ' +msg.length+ `\n`);
           var msg_body_image_adj_file = urlencode(row.msg_body_image_adj_file);
           var msg_type = urlencode(row.msg_type);
           var plan_date = urlencode(row.plan_date);
