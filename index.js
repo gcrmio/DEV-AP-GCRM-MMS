@@ -131,8 +131,8 @@ function sendMsg(subject, msg, dest, time){
         method: method,
         uri: url,
         headers:{
-            UID: uid,
-            PWD: password,
+            "UID": uid,
+            "PWD": password,
         },
         body: JSON.stringify({
             SB: subject,
@@ -142,7 +142,7 @@ function sendMsg(subject, msg, dest, time){
         }),
     },
         function (err, res, html) {
-            if (err) console.log(err);
+            if (err) console.log('error'+`\n`+err);
             else { resultCode = 200; console.log(html); }
           }
         );
