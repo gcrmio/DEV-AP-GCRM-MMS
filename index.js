@@ -126,8 +126,7 @@ function sendMsg(subject, msg, dest, time){
     const password = process.env.Epassword;
     console.log('send message +++++++++++++++++++++++++++++++++++++++++++++++++=');
     try {
-        //const result = await rp({
-        const result = rp({
+        const result = await rp({
             uri: url,
             method: 'GET',
             qs: {
