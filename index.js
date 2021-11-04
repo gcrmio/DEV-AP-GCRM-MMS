@@ -112,7 +112,7 @@ function dbSelect(){
           var success_yn = row.success_yn;
 
           console.log("Call sendMsg function====================================================");
-          sendMsg(subject, msg, deest, time);
+          sendMsg(subject, msg, dest, time);
         }
         // console.log('*************************************************************');
         // console.log(res.rows);
