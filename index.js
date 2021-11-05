@@ -91,7 +91,8 @@ app.get('/sendMsg', (req, res) => {
 app.get('/sendStat/:BID', (req, res) => {
 
         console.log("sendStat=======================================");
-        sendStat();
+        var BID = req.params.BID;
+        sendStat(BID);
         res.send('Send Stat Complete!');
 })
 
