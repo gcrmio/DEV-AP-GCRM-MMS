@@ -89,13 +89,10 @@ app.get('/sendMsg', (req, res) => {
     }
 })
 app.get('/sendStat/:BID', (req, res) => {
-    try {
+
         console.log("sendStat=======================================");
         sendStat();
         res.send('Send Stat Complete!');
-    } catch (error) {
-        console.log('There was an error!');
-    }
 })
 
 app.get('/credit', (req, res) => {
