@@ -141,7 +141,7 @@ function sendStat(BID){
     const uid = process.env.Euid;
     const password = process.env.Epassword;
     var bidValue = BID;
-
+    console.log('bidValue= '+bidValue);
     var geturl = url+'?UID='+uid+'&PWD='+password+'&BID='+bidValue+'&PNO=';
     console.log(geturl);
     console.log('======================');
