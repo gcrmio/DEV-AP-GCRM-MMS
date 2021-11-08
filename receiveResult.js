@@ -21,7 +21,7 @@ const dbconfig = {
       console.log('Connect to db done!');
     }
   })
-  
+
 module.exports.sendStat = function(BID){
     const url = 'https://oms.every8d.com/API21/HTTP/getDeliveryStatus.ashx';
     const uid = process.env.Euid;
@@ -58,11 +58,13 @@ function updateTransmit(sms_mobile, sms_send_time, sms_status){
     var send_date = sms_send_time;
     var success_yn = sms_status="100"? "Y":"N";
 
-    const sql = `UPDATE transmit as t set send_date = c.send_date, success_yn = c.success_yn 
-                 FROM (VALUES
+    const sql = `UPDATE transmit SET phone_no = t.phone_no, send_date = t.send_date, success_yn = t.success_yn 
+                 FROM 
+                    (VALUES
                     ("`+phone_no+`", "`+send_date+`", "`+success_yn+`")
-                ) AS c(phone_no, send_date, success_yn)
-                WHERE c.phone_no = t.phone_no`
+                )
+                AS t(phone_no, send_date, success_yn)
+                WHERE transmit.phone_no = t.phone_no`
     console.log(sql);
 
     client.query(sql, (err, res) => {
