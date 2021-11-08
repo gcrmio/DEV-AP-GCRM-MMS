@@ -36,6 +36,7 @@ module.exports.checkapi = function(req, res){
     res.status(200).send('CheckAPI Response');
 };
 
+/*
 function updateDE(access_token){
     var eventDefinitionModel = process.env.eventDefinitionModel;
     var 
@@ -65,3 +66,4 @@ function updateDE(access_token){
         console.log(error, response.body);
     })
 }
+*/
