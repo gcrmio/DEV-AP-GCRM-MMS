@@ -39,20 +39,23 @@ function(){
     console.log("ap-gcrm-mms heroku app is running on ["+app.get("port")+"]");
 });
 
+//00. Main
 app.get('/', (req, res) => {
     res.send('AP-GCRM-MMS APP');
 })
 
+//02. Send MMS
 app.get('/sendMMS', (req, res) => {
-    // try {
+    try {
         console.log("sendMsg=======================================");
         sendMMS.dbSelect();
         res.send('Send Msg Complete!');
-    // } catch (error) {
-        // console.log('There was an error!');
-    // }
+    } catch (error) {
+        console.log('There was an error!');
+    }
 })
 
+//03. Receive Result
 app.get('/receiveResult/:BID', (req, res) => {
 
         console.log("sendStat=======================================");
@@ -61,14 +64,15 @@ app.get('/receiveResult/:BID', (req, res) => {
         res.send('Send Stat Complete!');
 })
 
+//04. Load Result
 app.get('/loadResult', (req, res) => {
-  // try {
+  try {
     console.log("updateDE=======================================");
     loadResult.checkapi(req, res);
-    // res.send('updateDE Complete!');
-  // } catch (error) {
-      // console.log('There was an error!');
-  // }
+    res.send('updateDE Complete!');
+  } catch (error) {
+      console.log('There was an error!');
+  }
 })
 
 app.get('/credit', (req, res) => {
