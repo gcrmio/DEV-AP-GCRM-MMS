@@ -40,7 +40,7 @@ function updateTransmit(sms_mobile, sms_send_time, sms_status){
 
     const sql = `UPDATE transmit as t set send_date = c.send_date, success_yn = c.success_yn 
                  FROM (VALUES
-                    (`+phone_no+`, `+send_date+`, `+success_yn+`)
+                    ("`+phone_no+`", "`+send_date+`", "`+success_yn+`")
                 ) AS c(phone_no, send_date, success_yn)
                 WHERE c.phone_no = t.phone_no`
     console.log(sql);
