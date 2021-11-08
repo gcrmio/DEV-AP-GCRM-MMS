@@ -44,30 +44,12 @@ function updateTransmit(sms_mobile, sms_send_time, sms_status){
                 ) AS c(phone_no, send_date, success_yn)
                 WHERE c.phone_no = t.phone_no`
     console.log(sql);
-/*
+
     client.query(sql, (err, res) => {
         if(err){
           console.log(err.stack);
         } else {
-          //console.log(res.rows);
-          for(const row of res.rows){
-            var cust_id = urlencode(row.cust_id);
-            var dest = urlencode(row.phone_no);
-            var msg_id = urlencode(row.msg_id);
-            var subject = urlencode(row.msg_subject_adj);
-            var msg = urlencode(row.msg_body_text_adj);
-            console.log('msg:'+`\n`+msg);
-            console.log('msg length: ' +msg.length+ `\n`);
-            var msg_body_image_adj_file = urlencode(row.msg_body_image_adj_file);
-            var msg_type = urlencode(row.msg_type);
-            var plan_date = urlencode(row.plan_date);
-            var time = urlencode(row.send_date);
-            var success_yn = urlencode(row.success_yn);
-  
-            console.log("Call sendMsg function====================================================");
-            //sendMsg(subject, msg, dest, time);
-          }
+          console.log("Update Completed");
         }
       })
-      */
 }
