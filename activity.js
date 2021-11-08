@@ -39,14 +39,25 @@ module.exports.checkapi = function(req, res){
 
 function updateDE(access_token){
 
-    var payload2 = {
-        "keys":{
-            "cust_id": "TW702456915"
+    var payload2 = [
+        {
+            "keys":{
+                    "cust_id": "TW702456915"
+                    },
+            "values":{
+                    "send_status_yn": "Y"
+                    }
         },
-        "values":{
-            "send_status_yn": "Y"
+        {
+            "keys": {
+                    "cust_id": "TW702456917"
+                    },
+            "values":{
+                    "send_status_yn": "Y"
+                    }
         }
-    }
+    ]
+
     var DEputOptions = {
         uri: 'https://mcycnrl05rhxlvjpny59rqschtx4.rest.marketingcloudapis.com/hub/v1/dataevents/9fc86fa4-4c40-ec11-ba40-f40343ce83b8/rowset',
         body: JSON.stringify(payload2),
