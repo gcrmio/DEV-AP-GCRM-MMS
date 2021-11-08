@@ -17,6 +17,6 @@ module.exports.sendStat = function(BID){
             console.log(error);
         }
         console.log('Received Server Data!');
-        console.log(html);
+        console.log(response.body);
     })
 }
