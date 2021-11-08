@@ -3,7 +3,7 @@ var request = require('request');
 var urlencode = require('urlencode');
 var app = express();
 var pg = require('pg');
-var sendMMS = require('/.sendMMS');
+var sendMMS = require('./sendMMS');
 var loadResult = require('./loadResult');
 var receiveResult = require('./receiveResult');
 
