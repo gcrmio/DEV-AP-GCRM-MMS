@@ -1,7 +1,27 @@
 "use strict";
 var request = require('request');
 var pg = require('pg');
-
+const dbconfig = {
+    host: process.env.DB_host,
+    user: process.env.DB_user,
+    password: process.env.DB_password,
+    database: process.env.DB_database,
+    port: process.env.DB_port,
+    ssl: {
+      rejectUnauthorized: false
+    }
+  }
+  
+  console.log('PG Connect ==============================');
+  const client = new pg.Client(dbconfig);
+  client.connect(err =>{
+    if(err){
+      console.log('Failed to connect db ' + err);
+    } else {
+      console.log('Connect to db done!');
+    }
+  })
+  
 module.exports.sendStat = function(BID){
     const url = 'https://oms.every8d.com/API21/HTTP/getDeliveryStatus.ashx';
     const uid = process.env.Euid;
