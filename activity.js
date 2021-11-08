@@ -48,7 +48,7 @@ function updateDE(access_token){
         }
     }
     var DEputOptions = {
-        uri: 'https://mcycnrl05rhxlvjpny59rqschtx4.rest.marketingcloudapis.com/hub/v1/dataevents/9fc86fa4-4c40-ec11-ba40-f40343ce83b8/rowset',
+        uri: 'https://mcycnrl05rhxlvjpny59rqschtx4.rest.marketingcloudapis.com/hub/v1/dataevents/key:9fc86fa4-4c40-ec11-ba40-f40343ce83b8/rowset',
         body: JSON.stringify(payload2),
         method: 'PUT',
         headers:{
