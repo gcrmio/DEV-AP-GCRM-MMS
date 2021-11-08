@@ -70,7 +70,7 @@ app.get('/', (req, res) => {
 app.get('/sendMMS', (req, res) => {
     try {
         console.log("sendMsg=======================================");
-        //sendMMS.dbSelect();
+        sendMMS.dbSelect();
         res.send('Send Msg Complete!');
     } catch (error) {
         console.log('There was an error!');
