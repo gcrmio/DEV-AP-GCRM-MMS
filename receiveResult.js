@@ -18,7 +18,7 @@ module.exports.sendStat = function(BID){
         }
         console.log('Received Server Data!');
         var tmp = response.body;
-        var result = tmp.split(`\t`);
+        var result = tmp.replace(/\r?\n|\r/g, `\t`).split(`\t`);
         console.log(result[0]+`\n`+result[1]+`\n`+result[2]+`\n`+result[3]+`\n`+result[4]+`\n`);
         // var sms_count = tmp.sms_count;
         // console.log(sms_count);
