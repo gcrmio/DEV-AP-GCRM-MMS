@@ -17,6 +17,18 @@ module.exports.sendStat = function(BID){
             console.log(error);
         }
         console.log('Received Server Data!');
-        console.log(response.body);
+        tmp = response.body
+        var sms_count = tmp.sms_count;
+        console.log(sms_count);
+        var sms_name = tmp.name;
+        console.log(sms_name);
+        var sms_mobile = tmp.mobile;
+        console.log(sms_mobile);
+        var sms_send_time = tmp.send_time;
+        console.log(sms_send_time);
+        var sms_cost = tmp.cost;
+        console.log(sms_cost);
+        var sms_status = tmp.status;
+        console.log(sms_status);
     })
 }
