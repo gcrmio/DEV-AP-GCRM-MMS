@@ -31,25 +31,24 @@ module.exports.checkapi = function(req, res){
         console.log(tmp.access_token);
         console.log("=======================================================");
 
-        //updateDE(tmp.access_token);
+        updateDE(tmp.access_token);
     });
     res.status(200).send('CheckAPI Response');
 };
 
-/*
+
 function updateDE(access_token){
-    var eventDefinitionModel = process.env.eventDefinitionModel;
-    var 
+
     var payload2 = {
         "keys":{
-            "cust_id": "{{Event.}}"+eventDefinitionKey+".cust_id"
+            "cust_id": "TW702456915"
         },
         "values":{
             "send_status_yn": "Y"
         }
     }
     var DEputOptions = {
-        uri: 'https://mcycnrl05rhxlvjpny59rqschtx4.rest.marketingcloudapis.com/',
+        uri: 'https://mcycnrl05rhxlvjpny59rqschtx4.rest.marketingcloudapis.com/hub/v1/dataevents/9fc86fa4-4c40-ec11-ba40-f40343ce83b8/rowset',
         body: JSON.stringify(payload2),
         method: 'PUT',
         headers:{
@@ -66,4 +65,3 @@ function updateDE(access_token){
         console.log(error, response.body);
     })
 }
-*/
