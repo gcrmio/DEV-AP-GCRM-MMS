@@ -1,6 +1,5 @@
 var express = require('express');
 var request = require('request');
-const axios = require('axios');
 var urlencode = require('urlencode');
 var app = express();
 var pg = require('pg');
