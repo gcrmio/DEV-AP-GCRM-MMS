@@ -3,6 +3,7 @@ var request = require('request');
 var urlencode = require('urlencode');
 var app = express();
 var pg = require('pg');
+var activity = require('./activity');
 
 var http, options, proxy, url;
 http = require("http");
