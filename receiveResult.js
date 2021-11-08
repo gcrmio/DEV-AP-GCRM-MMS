@@ -1,6 +1,7 @@
+"use strict";
 var request = require('request');
 
-function sendStat(BID){
+module.exports.sendStat = function(BID){
     const url = 'https://oms.every8d.com/API21/HTTP/getDeliveryStatus.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
@@ -19,4 +20,3 @@ function sendStat(BID){
         console.log(html);
     })
 }
-
