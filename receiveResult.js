@@ -29,7 +29,7 @@ module.exports.sendStat = function(BID){
         // var sms_cost = result[4];
         // console.log("sms_cost= "+sms_cost);
         var sms_status = result[5];
-        updateTransmit(sms_mobile, sms_sendTime, sms_status);
+        updateTransmit(sms_mobile, sms_send_time, sms_status);
     })
 }
 
