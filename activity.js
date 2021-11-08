@@ -9,7 +9,7 @@ module.exports.checkapi = function(req, res){
         account_id: process.env.ACCOUNT_ID
     };
     var clientServerOptions = {
-        uri: 'https://mcycnrl05rhxlvjpny59rqschtx4.rest.marketingcloudapis.com/',
+        uri: 'https://mcycnrl05rhxlvjpny59rqschtx4.rest.marketingcloudapis.com/v2/token',
         body: JSON.stringify(payload),
         method: 'POST',
         headers: {
