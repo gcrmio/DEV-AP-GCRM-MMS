@@ -93,13 +93,13 @@ app.get('/credit', (req, res) => {
 })
 
 app.get('/updateDE', (req, res) => {
-  try {
+  // try {
     console.log("updateDE=======================================");
     activity.checkapi();
-    res.send('updateDE Complete!');
-  } catch (error) {
-      console.log('There was an error!');
-  }
+    // res.send('updateDE Complete!');
+  // } catch (error) {
+      // console.log('There was an error!');
+  // }
 })
 
 //PG_SELECT FROM transmit
