@@ -19,18 +19,17 @@ module.exports.sendStat = function(BID){
         console.log('Received Server Data!');
         var tmp = response.body;
         var result = tmp.replace(/\r?\n|\r/g, `\t`).split(`\t`);
-        console.log(result[0]+`\n`+result[1]+`\n`+result[2]+`\n`+result[3]+`\n`+result[4]+`\n`);
-        // var sms_count = tmp.sms_count;
-        // console.log(sms_count);
-        // var sms_name = tmp.name;
-        // console.log(sms_name);
-        // var sms_mobile = tmp.mobile;
-        // console.log(sms_mobile);
-        // var sms_send_time = tmp.send_time;
-        // console.log(sms_send_time);
-        // var sms_cost = tmp.cost;
-        // console.log(sms_cost);
-        // var sms_status = tmp.status;
-        // console.log(sms_status);
+        var sms_count = result[0];
+        console.log("sms_count= "+sms_count);
+        var sms_name = result[1];
+        console.log("sms_name= "+sms_name);
+        var sms_mobile = result[2];
+        console.log("sms_mobile= "+sms_mobile);
+        var sms_send_time = result[3];
+        console.log("sms_send_time= "+sms_send_time);
+        var sms_cost = result[4];
+        console.log("sms_cost= "+sms_cost);
+        var sms_status = result[5];
+        console.log("sms_status= "+sms_status);
     })
 }
