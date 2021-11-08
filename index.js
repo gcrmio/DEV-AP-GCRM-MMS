@@ -3,7 +3,6 @@ var request = require('request');
 var urlencode = require('urlencode');
 var app = express();
 var pg = require('pg');
-var activity = require('./activity');
 
 var http, options, proxy, url;
 http = require("http");
@@ -95,7 +94,7 @@ app.get('/credit', (req, res) => {
 app.get('/updateDE', (req, res) => {
   // try {
     console.log("updateDE=======================================");
-    activity.checkapi();
+    activity.checkapi(req, res);
     // res.send('updateDE Complete!');
   // } catch (error) {
       // console.log('There was an error!');
