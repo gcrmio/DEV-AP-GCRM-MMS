@@ -35,13 +35,16 @@ module.exports.sendStat = function(BID){
 
 function updateTransmit(sms_mobile, sms_send_time, sms_status){
     var phone_no = sms_mobile.replace('+','');
-    console.log("phone_no= "+phone_no);
-    var send_date = sms_send_time.replace('/','').replace(' ','').replace(':','');
-    console.log("send_date= "+send_date);
+    var send_date = sms_send_time;
     var success_yn = sms_status="100"? "Y":"N";
-    console.log("success_yn= "+success_yn);
+
+    const sql = `UPDATE transmit as t set send_date = c.send_date, success_yn = c.success_yn 
+                 FROM (VALUES
+                    (`+phone_no+`, `+send_date+`, `+success_yn+`)
+                ) AS c(phone_no, send_date, success_yn)
+                WHERE c.phone_no = t.phone_no`
+    console.log(sql);
 /*
-    const sql = `SELECT cust_id, phone_no, msg_id, msg_subject_adj, msg_body_text_adj, msg_body_image_adj_file, msg_type, plan_date, send_date, success_yn FROM transmit`
     client.query(sql, (err, res) => {
         if(err){
           console.log(err.stack);
