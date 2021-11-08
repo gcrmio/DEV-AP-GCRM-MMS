@@ -1,6 +1,29 @@
 "use strict";
+var pg = require('pg');
 var request = require('request');
 
+//PG Setup
+const dbconfig = {
+    host: process.env.DB_host,
+    user: process.env.DB_user,
+    password: process.env.DB_password,
+    database: process.env.DB_database,
+    port: process.env.DB_port,
+    ssl: {
+      rejectUnauthorized: false
+    }
+  }
+  
+  console.log('PG Connect ==============================');
+  const client = new pg.Client(dbconfig);
+  client.connect(err =>{
+    if(err){
+      console.log('Failed to connect db ' + err);
+    } else {
+      console.log('Connect to db done!');
+    }
+  })
+  
 module.exports.dbSelect = function(){
     
     const sql = `SELECT cust_id, phone_no, msg_id, msg_subject_adj, msg_body_text_adj, msg_body_image_adj_file, msg_type, plan_date, send_date, success_yn FROM transmit`

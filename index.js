@@ -7,7 +7,6 @@ var sendMMS = require('./sendMMS');
 var loadResult = require('./loadResult');
 var receiveResult = require('./receiveResult');
 
-
 var http, options, proxy, url;
 http = require("http");
 url = require("url");
@@ -30,7 +29,6 @@ http.get(options, function(res) {
   return console.log("status code", res.statusCode);
 });
 
-
 //Render Every8D page
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
@@ -40,28 +38,6 @@ app.listen(app.get("port"),
 function(){
     console.log("ap-gcrm-mms heroku app is running on ["+app.get("port")+"]");
 });
-
-//PG Setup
-const dbconfig = {
-    host: process.env.DB_host,
-    user: process.env.DB_user,
-    password: process.env.DB_password,
-    database: process.env.DB_database,
-    port: process.env.DB_port,
-    ssl: {
-      rejectUnauthorized: false
-    }
-  }
-  
-  console.log('PG Connect ==============================');
-  const client = new pg.Client(dbconfig);
-  client.connect(err =>{
-    if(err){
-      console.log('Failed to connect db ' + err);
-    } else {
-      console.log('Connect to db done!');
-    }
-  })
 
 app.get('/', (req, res) => {
     res.send('AP-GCRM-MMS APP');
