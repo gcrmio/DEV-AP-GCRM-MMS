@@ -17,7 +17,7 @@ module.exports.sendStat = function(BID){
             console.log(error);
         }
         console.log('Received Server Data!');
-        tmp = response.body
+        var tmp = response.body
         var sms_count = tmp.sms_count;
         console.log(sms_count);
         var sms_name = tmp.name;
