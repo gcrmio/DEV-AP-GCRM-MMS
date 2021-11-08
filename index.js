@@ -1,9 +1,10 @@
 var express = require('express');
 var request = require('request');
+const axios = require('axios');
 var urlencode = require('urlencode');
 var app = express();
 var pg = require('pg');
-
+var activity = require('./activity');
 
 var http, options, proxy, url;
 http = require("http");
@@ -64,30 +65,16 @@ app.get('/', (req, res) => {
     res.send('AP-GCRM-MMS APP');
 })
 
-app.get('/Every8D', (req, res) => {
-    console.log('Accessing Every8D');
-    res.render('every8D.html');
-})
-
-app.get('/pgSelect', (req, res) => {
-    try {
-        console.log("PGSELECT=======================================");
-        dbSelect();
-        res.send('PG Select Complete!');
-      } catch (error) {
-        console.log('There was an error!');
-      }
-})
-
 app.get('/sendMsg', (req, res) => {
     try {
         console.log("sendMsg=======================================");
-        dbSelect();
+        //dbSelect();
         res.send('Send Msg Complete!');
     } catch (error) {
         console.log('There was an error!');
     }
 })
+
 app.get('/sendStat/:BID', (req, res) => {
 
         console.log("sendStat=======================================");
@@ -104,6 +91,16 @@ app.get('/credit', (req, res) => {
     } catch (error) {
         console.log('There was an error!');
     }
+})
+
+app.get('/updateDE', (req, res) => {
+  try {
+    console.log("updateDE=======================================");
+    activity.checkapi();
+    res.send('updateDE Complete!');
+  } catch (error) {
+      console.log('There was an error!');
+  }
 })
 
 //PG_SELECT FROM transmit
@@ -137,13 +134,12 @@ function dbSelect(){
     })
   }
 
-function sendStat(BID){
-    const url = 'https://oms.every8d.com/API21/HTTP/getDeliveryStatus.ashx';
+function sendMsg(subject, msg, dest, time){
+    const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
-    var bidValue = BID;
-    console.log('bidValue= '+bidValue);
-    var geturl = url+'?UID='+uid+'&PWD='+password+'&BID='+bidValue+'&PNO=';
+
+    var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ST='+time;
     console.log(geturl);
     console.log('======================');
     request.get({
@@ -157,12 +153,13 @@ function sendStat(BID){
     })
 }
 
-function sendMsg(subject, msg, dest, time){
-    const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
+function sendStat(BID){
+    const url = 'https://oms.every8d.com/API21/HTTP/getDeliveryStatus.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
-
-    var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ST='+time;
+    var bidValue = BID;
+    console.log('bidValue= '+bidValue);
+    var geturl = url+'?UID='+uid+'&PWD='+password+'&BID='+bidValue+'&PNO=';
     console.log(geturl);
     console.log('======================');
     request.get({
