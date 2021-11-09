@@ -49,7 +49,7 @@ module.exports.dbSelect = function(){
           var success_yn = urlencode(row.success_yn);
 
           console.log("Call sendMsg function====================================================");
-          //sendMsg(subject, msg, dest, time);
+          sendMsg(subject, msg, dest, time);
         }
       }
     })
