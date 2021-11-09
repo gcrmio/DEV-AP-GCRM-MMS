@@ -27,7 +27,7 @@ const dbconfig = {
 
 module.exports.dbSelect = function(){
     
-    const sql = `SELECT cust_id, phone_no, msg_id, msg_subject_adj, msg_body_text_adj, msg_body_image_adj_file, msg_type, plan_date, send_date, success_yn FROM transmit`
+    const sql = `SELECT cust_id, phone_no, msg_id, msg_subject_adj, msg_body_text_adj, msg_body_image_adj_file, msg_type, plan_date, send_date, success_yn FROM transmit WHERE cust_id = 'KR00000004'`
   
     client.query(sql, (err, res) => {
       if(err){
