@@ -54,7 +54,7 @@ module.exports.sendStat = function(BID){
 }
 
 function updateTransmit(sms_mobile, sms_send_time, sms_status){
-    var phone_no = sms_mobile.startwith('+')? sms_mobile:'+'+sms_mobile;
+    var phone_no = sms_mobile.startsWith('+')? sms_mobile:'+'+sms_mobile;
     var send_date = sms_send_time;
     var success_yn = sms_status="100"? "Y":"N";
 
