@@ -57,7 +57,7 @@ module.exports.checkapi = function(req, res){
     res.status(200).send('CheckAPI Response');
 };
 
-var payload2 = new Object();
+var payload2 = new Array();
 
 function updateDE(access_token, phone_no){
     var pKey = {};
