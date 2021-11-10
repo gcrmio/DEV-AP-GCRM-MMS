@@ -11,7 +11,7 @@ const dbconfig = {
       rejectUnauthorized: false
     }
   }
-  
+
 console.log('PG Connect ==============================');
 const client = new pg.Client(dbconfig);
 client.connect(err =>{
@@ -57,9 +57,9 @@ module.exports.checkapi = function(req, res){
     res.status(200).send('CheckAPI Response');
 };
 
+var payload2 = new Object();
 
 function updateDE(access_token, phone_no){
-    var payload2 = new Array();
     var pKey = {};
     var pValue = {};
 
