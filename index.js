@@ -66,13 +66,13 @@ app.get('/receiveResult/:BID', (req, res) => {
 
 //04. Load Result
 app.get('/loadResult', (req, res) => {
-  try {
+  // try {
     console.log("updateDE=======================================");
     loadResult.checkapi(req, res);
     res.send('updateDE Complete!');
-  } catch (error) {
-      console.log('There was an error!');
-  }
+  // } catch (error) {
+  //     console.log('There was an error!');
+  // }
 })
 
 app.get('/credit', (req, res) => {
