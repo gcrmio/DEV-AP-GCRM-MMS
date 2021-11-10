@@ -74,7 +74,8 @@ function updateDE(access_token, phone_no){
             pItem.cust_id = row.cust_id;
             pItem.send_status_yn = row.success_yn;
             pItem = JSON.stringify(pItem);
-            payload2.push(JSON.parse(pItem));
+            console.log(pItme);
+            // payload2.push(JSON.parse(pItem));
         }
     }
     })
