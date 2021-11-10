@@ -66,12 +66,12 @@ function updateDE(access_token, phone_no){
     //Get send complete transmit records
     var selectFrom = function(data, table, condition) {
         return new Promise(function(resolve, reject){
-            client.query(`SELECT ${data} FROM ${table} ${condition}`, function(err, result) {
+            pool.query(`SELECT ${data} FROM ${table} ${condition}`, function(err, result) {
                 if(err)
                     return reject(err);
                 resolve(result.rows[0][data]);
             })
-            client.end();
+            pool.end();
         });
     }
     
