@@ -61,7 +61,6 @@ function updateDE(access_token, phone_no){
                     return reject(err);
                 resolve(result.rows);
             })
-            pool.end();
         });
     }
     
