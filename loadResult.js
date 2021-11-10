@@ -60,7 +60,6 @@ module.exports.checkapi = function(req, res){
 
 function updateDE(access_token, phone_no){
     var payload2 = new Array();
-    var pObject = {};
     var pKey = {};
     var pValue = {};
 
@@ -75,13 +74,14 @@ function updateDE(access_token, phone_no){
             pKey.cust_id = row.cust_id;
             pValue.send_status_yn = row.success_yn;
             payload2.push({keys: pKey, values: pValue});
-            console.log('+++');
-            console.log(payload2);
-            console.log('+++');
+            // console.log('+++');
+            // console.log(payload2);
+            // console.log('+++');
         }
     }
     })
-
+    console.log("111111111111");
+    console.log(payload2);
     // var payload2 = [
         // {
             // "keys":{
