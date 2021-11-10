@@ -64,9 +64,9 @@ function updateDE(access_token, phone_no){
     
     selectFrom()
     .then(function(result){
-        console.log('result');
-        console.log(result);
-        console.log('result length= '+result.length);
+        // console.log('result');
+        // console.log(result);
+        // console.log('result length= '+result.length);
         for(var i = 0; i < result.length; i++){
             var pKey = {};
             var pValue = {};
