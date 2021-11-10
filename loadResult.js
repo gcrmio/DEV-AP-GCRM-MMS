@@ -60,7 +60,8 @@ module.exports.checkapi = function(req, res){
 
 function updateDE(access_token, phone_no){
     var payload2 = new Array();
-    
+    var pKey = {};
+    var pValue = {};
 
     //Get send complete transmit records
     const sql = `SELECT cust_id, phone_no, send_date, success_yn FROM transmit`;
@@ -70,12 +71,10 @@ function updateDE(access_token, phone_no){
         console.log(err.stack);
     } else {
         for(const row of res.rows){
-            var pItem = new Object();
-            pItem.cust_id = row.cust_id;
-            pItem.send_status_yn = row.success_yn;
-            pItem = JSON.stringify(pItem);
-            console.log(pItem);
-            // payload2.push(JSON.parse(pItem));
+            pKey.cust_id = row.cust_id;
+            pValue.send_status_yn = row.success_yn;
+            payload2.push({keys: pKey}, {values: pValue});
+            console.log(payload2);
         }
     }
     })
