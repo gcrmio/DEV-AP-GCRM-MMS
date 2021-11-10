@@ -1,5 +1,26 @@
 "use strict";
 var request = require('request');
+var pg = require('pg');
+const dbconfig = {
+    host: process.env.DB_host,
+    user: process.env.DB_user,
+    password: process.env.DB_password,
+    database: process.env.DB_database,
+    port: process.env.DB_port,
+    ssl: {
+      rejectUnauthorized: false
+    }
+  }
+  
+console.log('PG Connect ==============================');
+const client = new pg.Client(dbconfig);
+client.connect(err =>{
+if(err){
+    console.log('Failed to connect db ' + err);
+} else {
+    console.log('Connect to db done!');
+}
+})
 
 module.exports.checkapi = function(req, res){
     var payload = {
@@ -37,28 +58,48 @@ module.exports.checkapi = function(req, res){
 };
 
 
-function updateDE(access_token){
-//, cust_id, send_status_yn
-    var payload2 = [
-        {
-            "keys":{
-                    "cust_id": "TW702456915"
-                    },
-            "values":{
-                    "send_status_yn": "Y"
-                    }
-        },
-        {
-            "keys": {
-                    "cust_id": "TW702456917"
-                    },
-            "values":{
-                    "send_status_yn": "Y"
-                    }
+function updateDE(access_token, phone_no){
+    var payload2 = [];
+    //Get send complete transmit records
+    const sql = `SELECT cust_id, phone_no, send_date, success_yn FROM transmit`;
+
+    client.query(sql, (err, res) => {
+    if(err){
+        console.log(err.stack);
+    } else {
+        for(const row of res.rows){
+            var pg_cust_id = row.cust_id;
+            var pg_phone_no = row.phone_no;
+            var pg_send_date = row.send_date;
+            var pg_success_yn = row.success_yn;
+            payload2.push({
+                keys: pg_cust_id,
+                values: pg_success_yn
+            });
         }
-    ]
+    }
+    })
+
+    // var payload2 = [
+        // {
+            // "keys":{
+                    // "cust_id": "TW702456915"
+                    // },
+            // "values":{
+                    // "send_status_yn": "Y"
+                    // }
+        // },
+        // {
+            // "keys": {
+                    // "cust_id": "TW702456917"
+                    // },
+            // "values":{
+                    // "send_status_yn": "Y"
+                    // }
+        // }
+    // ]
     console.log('*************************************************************************');
-    console.log(typeof(payload2));
+    console.log(payload2);
     console.log('*************************************************************************');
     
     var DEputOptions = {
@@ -75,7 +116,7 @@ function updateDE(access_token){
         account_id: process.env.ACCOUNT_ID
     }
 
-    request(DEputOptions, function(error, response){
-        console.log(error, response.body);
-    })
+    // request(DEputOptions, function(error, response){
+        // console.log(error, response.body);
+    // })
 }
