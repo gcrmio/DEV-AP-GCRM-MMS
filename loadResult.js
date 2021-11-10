@@ -71,11 +71,8 @@ function updateDE(access_token, phone_no){
             var pKey = {};
             var pValue = {};
             pKey.cust_id = result[i]['cust_id'];
-            console.log(pKey);
             pValue.phone_no = result[i]['phone_no'];
-            console.log(pValue);
             payload2.push({keys:pKey, values:pValue});
-            console.log(i)
         }
         console.log('PAYLOAD IS HERE');
         console.log(payload2);
@@ -93,9 +90,9 @@ function updateDE(access_token, phone_no){
             account_id: process.env.ACCOUNT_ID
         }
     
-        // request(DEputOptions, function(error, response){
-            // console.log(error, response.body);
-        // })
+        request(DEputOptions, function(error, response){
+            console.log(error, response.body);
+        })
 
     }).catch(function(err){
         console.log(err);   
