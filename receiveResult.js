@@ -77,6 +77,8 @@ function updateTransmit(sms_mobile, sms_send_time, sms_status){
         case '-3':
             success_yn = 'F';
             fail_reason = '[-3] Invalid mobile number';
+            console.log(fail_reason);
+            console.log(fail_reason.length);
             break;
         case '-4':
             success_yn = 'F';
@@ -137,7 +139,7 @@ function updateTransmit(sms_mobile, sms_send_time, sms_status){
     const sql = `UPDATE transmit SET phone_no = t.phone_no, send_date = t.send_date, success_yn = t.success_yn, fail_reason = t.fail_reason 
                  FROM 
                     (VALUES
-                    ('`+phone_no+`', '`+send_date+`', '`+success_yn+`', '  `+fail_reason+ `')
+                    ('`+phone_no+`', '`+send_date+`', '`+success_yn+`', '`+fail_reason+ `')
                 )
                 AS t(phone_no, send_date, success_yn, fail_reason)
                 WHERE transmit.phone_no = t.phone_no`
