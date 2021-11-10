@@ -79,6 +79,7 @@ function updateDE(access_token, phone_no){
             // console.log('+++');
         }
     }
+    return payload2;
     })
     console.log("111111111111");
     console.log(payload2);
