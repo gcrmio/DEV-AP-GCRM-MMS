@@ -60,7 +60,7 @@ module.exports.checkapi = function(req, res){
 
 function updateDE(access_token, phone_no){
     var payload2 = new Array();
-    var pItem = new Object();
+    
 
     //Get send complete transmit records
     const sql = `SELECT cust_id, phone_no, send_date, success_yn FROM transmit`;
@@ -70,6 +70,7 @@ function updateDE(access_token, phone_no){
         console.log(err.stack);
     } else {
         for(const row of res.rows){
+            var pItem = new Object();
             pItem.cust_id = row.cust_id;
             pItem.send_status_yn = row.success_yn;
             pItem = JSON.stringify(pItem);
