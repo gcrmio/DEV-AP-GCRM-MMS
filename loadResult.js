@@ -67,7 +67,7 @@ function updateDE(access_token, phone_no){
     selectFrom()
     .then(function(result){
         console.log(result);
-        for(i = 0; i <= result.length; i++){
+        for(var i = 0; i < result.length; i++){
             pKey.cust_id = result[i]['cust_id'];
             pValue.phone_no = result[i]['phone_no'];
             payload2.push({keys:pKey, values:pValue});
