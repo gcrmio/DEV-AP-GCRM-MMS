@@ -68,9 +68,9 @@ function updateDE(access_token, phone_no){
     .then(function(result){
 
         for(var i = 0; i < result.length; i++){
-            pKey.cust_id = result[i]['cust_id'];
-            pValue.phone_no = result[i]['phone_no'];
-            payload2.push({keys:pKey[i], values:pValue[i]});
+            pKey[i].cust_id = result[i]['cust_id'];
+            pValue[i].phone_no = result[i]['phone_no'];
+            payload2.push({keys:pKey, values:pValue});
         }
         console.log('PAYLOAD IS HERE');
         console.log(payload2);
