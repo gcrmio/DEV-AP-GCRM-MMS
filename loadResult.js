@@ -59,7 +59,9 @@ module.exports.checkapi = function(req, res){
 
 
 function updateDE(access_token, phone_no){
-    var payload2 = [];
+    var payload2 = new Array();
+    var pItem = new Object();
+
     //Get send complete transmit records
     const sql = `SELECT cust_id, phone_no, send_date, success_yn FROM transmit`;
 
@@ -68,19 +70,10 @@ function updateDE(access_token, phone_no){
         console.log(err.stack);
     } else {
         for(const row of res.rows){
-            var pg_cust_id = row.cust_id;
-            console.log(pg_cust_id);
-            var pg_phone_no = row.phone_no;
-            console.log(pg_phone_no);
-            var pg_send_date = row.send_date;
-            console.log(pg_send_date);
-            var pg_success_yn = row.success_yn;
-            console.log(pg_success_yn);
-            
-            payload2.push({
-                keys: pg_cust_id,
-                values: pg_success_yn
-            });
+            pItem.cust_id = row.cust_id;
+            pItem.send_status_yn = row.success_yn;
+            pItem = JSON.stringify(pItem);
+            payload2.push(JSON.parse(pItem));
         }
     }
     })
