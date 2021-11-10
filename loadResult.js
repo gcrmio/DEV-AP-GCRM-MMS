@@ -59,7 +59,7 @@ function updateDE(access_token, phone_no){
             pool.query(`SELECT cust_id, phone_no from transmit`, function(err, result) {
                 if(err)
                     return reject(err);
-                resolve(result.rows[0][data]);
+                resolve(result.rows);
             })
             pool.end();
         });
