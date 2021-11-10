@@ -54,9 +54,9 @@ function updateDE(access_token, phone_no){
     // var pValue = {};
 
     //Get send complete transmit records
-    var selectFrom = function(data, table, condition) {
+    var selectFrom = function() {
         return new Promise(function(resolve, reject){
-            pool.query(`SELECT ${data} FROM ${table} ${condition}`, function(err, result) {
+            pool.query(`SELECT cust_id, phone_no from transmit`, function(err, result) {
                 if(err)
                     return reject(err);
                 resolve(result.rows[0][data]);
@@ -65,7 +65,7 @@ function updateDE(access_token, phone_no){
         });
     }
     
-    selectFrom(`cust_id, phone_no`,'transmit', '')
+    selectFrom()
     .then(function(result){
         console.log(result);    
     }).catch(function(err){
