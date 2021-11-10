@@ -48,7 +48,7 @@ module.exports.checkapi = function(req, res){
 };
 
 
-var payload2 = [];
+var payload2 = {};
 function updateDE(access_token, phone_no){
     var pKey = {};
     var pValue = {};
