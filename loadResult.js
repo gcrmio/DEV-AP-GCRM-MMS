@@ -31,14 +31,14 @@ module.exports.checkapi = function(req, res){
         console.log(tmp.access_token);
         console.log("=======================================================");
 
-        //updateDE(tmp.access_token);
+        updateDE(tmp.access_token);
     });
     res.status(200).send('CheckAPI Response');
 };
 
 
-function updateDE(access_token, cust_id, send_status_yn){
-
+function updateDE(access_token){
+//, cust_id, send_status_yn
     var payload2 = [
         {
             "keys":{
