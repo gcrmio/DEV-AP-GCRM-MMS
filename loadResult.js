@@ -48,7 +48,7 @@ module.exports.checkapi = function(req, res){
 };
 
 
-var payload2 = {};
+var payload2 = [];
 function updateDE(access_token, phone_no){
     var pKey = {};
     var pValue = {};
@@ -70,7 +70,7 @@ function updateDE(access_token, phone_no){
         for(var i = 0; i < result.length; i++){
             pKey.cust_id = result[i]['cust_id'];
             pValue.phone_no = result[i]['phone_no'];
-            payload2.push({keys:pKey, values:pValue});
+            payload2.push({keys:pKey[i], values:pValue[i]});
         }
         console.log('PAYLOAD IS HERE');
         console.log(payload2);
