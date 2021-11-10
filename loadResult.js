@@ -71,16 +71,12 @@ function updateDE(access_token, phone_no){
             pKey.cust_id = result[i]['cust_id'];
             pValue.phone_no = result[i]['phone_no'];
             payload2.push({keys:pKey, values:pValue});
-            console.log(i);
-            console.log(payload2);
         }
-
+        console.log(payload2);
     }).catch(function(err){
         console.log(err);   
     });
 
-    console.log("111111111111");
-    console.log(payload2);
     // var payload2 = [
         // {
             // "keys":{
