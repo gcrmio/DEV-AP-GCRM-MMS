@@ -49,7 +49,7 @@ module.exports.dbSelect = function(){
           var success_yn = urlencode(row.success_yn);
 
           console.log("Call sendMsg function====================================================");
-          sendMsg(subject, msg, dest, time);
+          //sendMsg(subject, msg, dest, time);
         }
       }
     })
@@ -71,5 +71,32 @@ function sendMsg(subject, msg, dest, time){
         }
         console.log('Received Server Data!');
         console.log(html);
+        var tmp = response.body;
+        var result = tmp.split(',');
+        var msg_batch_id = result[4];        
+        updateBatchId(dest, msg_batch_id);
     })
+}
+
+function updateBatchId(dest, msg_batch_id){
+    var phone_no = dest;
+    var batch_id = msg_batch_id
+    console.log('batch_id= '+batch_id);
+    
+    const sql = `UPDATE transmit SET phone_no = t.phone_no, batch_id = t.batch_id 
+                 FROM 
+                    (VALUES
+                    ('`+phone_no+`', '`+batch_id+`')
+                )
+                AS t(phone_no, batch_id)
+                WHERE transmit.phone_no = t.phone_no`
+    console.log(sql);
+
+    client.query(sql, (err, res) => {
+        if(err){
+          console.log(err.stack);
+        } else {
+          console.log("Batch Id Update Completed");
+        }
+      })
 }

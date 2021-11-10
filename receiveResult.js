@@ -58,14 +58,88 @@ function updateTransmit(sms_mobile, sms_send_time, sms_status){
     var phone_no = sms_mobile.startsWith('+')? sms_mobile:'+'+sms_mobile;
     console.log('phone_no= '+phone_no);
     var send_date = sms_send_time;
-    var success_yn = sms_status="100"? "Y":"N";
+    // var success_yn = sms_status="100"? "S":"F";
+    var success_yn = '';
+    var fail_reason = '';
+    
+    switch(sms_status){
+        case '100':
+            success_yn = 'S';
+            break;
+        case '-1':
+            success_yn = 'F';
+            fail_reason = '[-1] parameter error'
+            break;
+        case '-2':
+            success_yn = 'F';
+            fail_reason = '[-2] account or password error';
+            break;
+        case '-3':
+            success_yn = 'F';
+            fail_reason = '[-3] Invalid mobile number';
+            break;
+        case '-4':
+            success_yn = 'F';
+            fail_reason = '[-4] DT format error or send time has exceeded more than 24 horus';
+            break;
+        case '-5':
+            success_yn = 'F';
+            fail_reason = '[-5] Short message length on limit error';
+            break;
+        case '-6':
+            success_yn = 'F';
+            fail_reason = '[-6] DT format error';
+            break;
+        case '101':
+            success_yn = 'F';
+            fail_reason = '[101] Delivery failure due to mobile terminal factors';
+            break;
+        case '102':
+            success_yn = 'F';
+            fail_reason = '[102] Delivery failure due to telecommunications terminal factors';
+            break;
+        case '103':
+            success_yn = 'F';
+            fail_reason = '[103] This mobile phone number does not exist.';
+            break;
+        case '104':
+            success_yn = 'F';
+            fail_reason = '[104] Delivery failure due to telecommunications terminal factors';
+            break;
+        case '105':
+            success_yn = 'F';
+            fail_reason = '[105] Delivery failure due to telecommunications terminal factors';
+            break;
+        case '106':
+            success_yn = 'F';
+            fail_reason = '[106] Delivery fail due to telecommunications terminal factors';
+            break;
+        case '107':
+            success_yn = 'F';
+            fail_reason = '[107] Received after deadline';
+            break;
+        case '300':
+            success_yn = 'F';
+            fail_reason = '[300] Reservation SMS';
+            break;
+        case '303':
+            success_yn = 'F';
+            fail_reason = '[303] Canceled';
+            break;
+        case '500':
+            success_yn = 'F';
+            fail_reason = '[500] International message delivery failed because the configuration is in closed position.';
+            break;
+        default:
+                console.log('[0] Sent');
+    }
 
-    const sql = `UPDATE transmit SET phone_no = t.phone_no, send_date = t.send_date, success_yn = t.success_yn 
+    const sql = `UPDATE transmit SET phone_no = t.phone_no, send_date = t.send_date, success_yn = t.success_yn, fail_reason = t.fail_reason 
                  FROM 
                     (VALUES
-                    ('`+phone_no+`', '`+send_date+`', '`+success_yn+`')
+                    ('`+phone_no+`', '`+send_date+`', '`+success_yn+`', '  `+fail_reason+ `')
                 )
-                AS t(phone_no, send_date, success_yn)
+                AS t(phone_no, send_date, success_yn, fail_reason)
                 WHERE transmit.phone_no = t.phone_no`
     console.log(sql);
 
