@@ -50,8 +50,8 @@ module.exports.checkapi = function(req, res){
 
 var payload2 = [];
 function updateDE(access_token, phone_no){
-    // var pKey = {};
-    // var pValue = {};
+    var pKey = {};
+    var pValue = {};
 
     //Get send complete transmit records
     var selectFrom = function() {
@@ -66,13 +66,19 @@ function updateDE(access_token, phone_no){
     
     selectFrom()
     .then(function(result){
-        console.log(result);    
+        console.log(result);
+        for(i = 0; i <= result.length; i++){
+            pKey.cust_id = result[i]['cust_id'];
+            pValue.phone_no = result[i]['phone_no'];
+            payload2.push({keys:pKey, values:pValue});
+        }
+
     }).catch(function(err){
         console.log(err);   
     });
 
     console.log("111111111111");
-    // console.log(payload2);
+    console.log(payload2);
     // var payload2 = [
         // {
             // "keys":{
