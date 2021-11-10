@@ -56,7 +56,7 @@ function updateDE(access_token, phone_no){
     //Get send complete transmit records
     var selectFrom = function() {
         return new Promise(function(resolve, reject){
-            pool.query(`SELECT cust_id, phone_no from transmit`, function(err, result) {
+            pool.query(`SELECT cust_id, phone_no from transmit WHERE cust_id IN ('KR00000005', 'KR00000006', 'KR00000007')`, function(err, result) {
                 if(err)
                     return reject(err);
                 resolve(result.rows);
@@ -72,7 +72,25 @@ function updateDE(access_token, phone_no){
             pValue.phone_no = result[i]['phone_no'];
             payload2.push({keys:pKey, values:pValue});
         }
-        console.log(payload2);
+
+        var DEputOptions = {
+            uri: 'https://mcycnrl05rhxlvjpny59rqschtx4.rest.marketingcloudapis.com/hub/v1/dataevents/9fc86fa4-4c40-ec11-ba40-f40343ce83b8/rowset',
+            body: JSON.stringify(payload2),
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + access_token,
+            },
+            client_id: process.env.CLIENT_ID,
+            client_secret: process.env.CLIENT_SECRET,
+            grant_type: "client_credentials",
+            account_id: process.env.ACCOUNT_ID
+        }
+    
+        request(DEputOptions, function(error, response){
+            console.log(error, response.body);
+        })
+        
     }).catch(function(err){
         console.log(err);   
     });
@@ -96,21 +114,5 @@ function updateDE(access_token, phone_no){
         // }
     // ]
     
-    var DEputOptions = {
-        uri: 'https://mcycnrl05rhxlvjpny59rqschtx4.rest.marketingcloudapis.com/hub/v1/dataevents/9fc86fa4-4c40-ec11-ba40-f40343ce83b8/rowset',
-        body: JSON.stringify(payload2),
-        method: 'POST',
-        headers:{
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + access_token,
-        },
-        client_id: process.env.CLIENT_ID,
-        client_secret: process.env.CLIENT_SECRET,
-        grant_type: "client_credentials",
-        account_id: process.env.ACCOUNT_ID
-    }
 
-    // request(DEputOptions, function(error, response){
-        // console.log(error, response.body);
-    // })
 }
