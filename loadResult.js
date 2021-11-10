@@ -12,7 +12,6 @@ const dbconfig = {
     }
   }
 
-var payload2 = new Array();
 console.log('PG Connect ==============================');
 const client = new pg.Client(dbconfig);
 client.connect(err =>{
@@ -61,7 +60,7 @@ module.exports.checkapi = function(req, res){
 
 
 function updateDE(access_token, phone_no){
-
+    var payload2 = [];
     var pKey = {};
     var pValue = {};
 
@@ -69,9 +68,9 @@ function updateDE(access_token, phone_no){
     const sql = `SELECT cust_id, phone_no, send_date, success_yn FROM transmit`;
 
     client.query(sql, (err, res) => {
-    if(err){
-        console.log(err.stack);
-    } else {
+    // if(err){
+    //     console.log(err.stack);
+    // } else {
         for(const row of res.rows){
             pKey.cust_id = row.cust_id;
             pValue.send_status_yn = row.success_yn;
@@ -80,8 +79,6 @@ function updateDE(access_token, phone_no){
             // console.log(payload2);
             // console.log('+++');
         }
-    }
-
     })
     console.log("111111111111");
     console.log(payload2);
