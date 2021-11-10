@@ -57,7 +57,10 @@ function updateDE(access_token, cust_id, send_status_yn){
                     }
         }
     ]
-
+    console.log('*************************************************************************');
+    console.log(typeof(payload2));
+    console.log('*************************************************************************');
+    
     var DEputOptions = {
         uri: 'https://mcycnrl05rhxlvjpny59rqschtx4.rest.marketingcloudapis.com/hub/v1/dataevents/9fc86fa4-4c40-ec11-ba40-f40343ce83b8/rowset',
         body: JSON.stringify(payload2),

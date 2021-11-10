@@ -77,8 +77,6 @@ function updateTransmit(sms_mobile, sms_send_time, sms_status){
         case '-3':
             success_yn = 'F';
             fail_reason = '[-3] Invalid mobile number';
-            console.log(fail_reason);
-            console.log(fail_reason.length);
             break;
         case '-4':
             success_yn = 'F';
