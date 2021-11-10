@@ -60,27 +60,30 @@ module.exports.checkapi = function(req, res){
 
 var payload2 = [];
 function updateDE(access_token, phone_no){
-    var pKey = {};
-    var pValue = {};
+    // var pKey = {};
+    // var pValue = {};
+
     //Get send complete transmit records
-    const sql = `SELECT cust_id, phone_no, send_date, success_yn FROM transmit`;
-    client.query(sql, (err, res) => {
-    if(err){
-        console.log(err.stack);
-    } else {
-        for(const row of res.rows){
-            pKey.cust_id = row.cust_id;
-            pValue.send_status_yn = row.success_yn;
-            payload2.push({keys: pKey, values: pValue});
-            console.log('+++');
-            console.log(payload2);
-            console.log('+++');
-            resolve(payload2);
-        }
+    var selectFrom = function(data, table, condition) {
+        return new Promise(function(resolve, reject){
+            client.query(`SELECT ${data} FROM ${table} ${condition}`, function(err, result) {
+                if(err)
+                    return reject(err);
+                resolve(result.rows[0][data]);
+            })
+            client.end();
+        });
     }
-    })
+    
+    selectFrom(`cust_id, phone_no`,'transmit', '')
+    .then(function(result){
+        console.log(result);    
+    }).catch(function(err){
+        console.log(err);   
+    });
+
     console.log("111111111111");
-    console.log(payload2);
+    // console.log(payload2);
     // var payload2 = [
         // {
             // "keys":{
