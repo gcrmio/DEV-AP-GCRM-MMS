@@ -57,9 +57,10 @@ module.exports.checkapi = function(req, res){
     res.status(200).send('CheckAPI Response');
 };
 
-var payload2 = new Array();
+
 
 function updateDE(access_token, phone_no){
+    var payload2 = new Array();
     var pKey = {};
     var pValue = {};
 
@@ -78,8 +79,9 @@ function updateDE(access_token, phone_no){
             // console.log(payload2);
             // console.log('+++');
         }
+        return payload2;
     }
-    return payload2;
+
     })
     console.log("111111111111");
     console.log(payload2);
