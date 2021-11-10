@@ -69,9 +69,14 @@ function updateDE(access_token, phone_no){
     } else {
         for(const row of res.rows){
             var pg_cust_id = row.cust_id;
+            console.log(pg_cust_id);
             var pg_phone_no = row.phone_no;
+            console.log(pg_phone_no);
             var pg_send_date = row.send_date;
+            console.log(pg_send_date);
             var pg_success_yn = row.success_yn;
+            console.log(pg_success_yn);
+            
             payload2.push({
                 keys: pg_cust_id,
                 values: pg_success_yn
