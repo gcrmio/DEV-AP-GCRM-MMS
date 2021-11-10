@@ -60,6 +60,7 @@ module.exports.checkapi = function(req, res){
 
 function updateDE(access_token, phone_no){
     var payload2 = new Array();
+    var pObject = {};
     var pKey = {};
     var pValue = {};
 
@@ -73,8 +74,10 @@ function updateDE(access_token, phone_no){
         for(const row of res.rows){
             pKey.cust_id = row.cust_id;
             pValue.send_status_yn = row.success_yn;
-            payload2.push({keys: pKey}, {values: pValue});
+            payload2.push({keys: pKey, values: pValue});
+            console.log('+++');
             console.log(payload2);
+            console.log('+++');
         }
     }
     })
@@ -97,9 +100,6 @@ function updateDE(access_token, phone_no){
                     // }
         // }
     // ]
-    console.log('*************************************************************************');
-    console.log(payload2);
-    console.log('*************************************************************************');
     
     var DEputOptions = {
         uri: 'https://mcycnrl05rhxlvjpny59rqschtx4.rest.marketingcloudapis.com/hub/v1/dataevents/9fc86fa4-4c40-ec11-ba40-f40343ce83b8/rowset',
