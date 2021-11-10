@@ -12,6 +12,7 @@ const dbconfig = {
     }
   }
 
+var payload2 = new Array();
 console.log('PG Connect ==============================');
 const client = new pg.Client(dbconfig);
 client.connect(err =>{
@@ -60,7 +61,7 @@ module.exports.checkapi = function(req, res){
 
 
 function updateDE(access_token, phone_no){
-    var payload2 = new Array();
+
     var pKey = {};
     var pValue = {};
 
@@ -79,7 +80,6 @@ function updateDE(access_token, phone_no){
             // console.log(payload2);
             // console.log('+++');
         }
-        return payload2;
     }
 
     })
@@ -118,7 +118,7 @@ function updateDE(access_token, phone_no){
         account_id: process.env.ACCOUNT_ID
     }
 
-    // request(DEputOptions, function(error, response){
-        // console.log(error, response.body);
-    // })
+    request(DEputOptions, function(error, response){
+        console.log(error, response.body);
+    })
 }
