@@ -72,14 +72,18 @@ function updateDE(access_token, phone_no){
     //     console.log(err.stack);
     // } else {
         for(const row of res.rows){
-            pKey.cust_id = row.cust_id;
-            pValue.send_status_yn = row.success_yn;
-            payload2.push({keys: pKey, values: pValue});
-            // console.log('+++');
-            // console.log(payload2);
-            // console.log('+++');
+            var pg_cust_id = row.cust_id;
+            var pg_send_status_yn = row.success_yn;
+            addPayload(pg_cust_id, pg_send_status_yn);
         }
     })
+
+    function addPayload(pg_cust_id, pg_send_status_yn){
+        pKey.cust_id = pg_cust_id;
+        pValue.send_status_yn = pg_send_status_yn;
+        payload2.push({keys: pKey, values: pValue});
+    }
+
     console.log("111111111111");
     console.log(payload2);
     // var payload2 = [
@@ -115,7 +119,7 @@ function updateDE(access_token, phone_no){
         account_id: process.env.ACCOUNT_ID
     }
 
-    request(DEputOptions, function(error, response){
-        console.log(error, response.body);
-    })
+    // request(DEputOptions, function(error, response){
+        // console.log(error, response.body);
+    // })
 }
