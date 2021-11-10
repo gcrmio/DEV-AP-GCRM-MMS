@@ -65,16 +65,18 @@ function updateDE(access_token, phone_no){
     
     selectFrom()
     .then(function(result){
-
-        for(var i = 0; i < result.length; i++){
+        console.log('result');
+        console.log(result);
+        console.log('result length= '+result.length);
+        // for(var i = 0; i < result.length; i++){
             
-            pKey.cust_id = result['cust_id'];
-            console.log(pKey);
-            pValue.phone_no = result['phone_no'];
-            console.log(pValue);
-            console.log(i+'=====');
+        //     pKey.cust_id = result['cust_id'];
+        //     console.log(pKey);
+        //     pValue.phone_no = result['phone_no'];
+        //     console.log(pValue);
+        //     console.log(i+'=====');
 
-        }
+        // }
         // console.log('PAYLOAD IS HERE');
         // console.log(payload2);
         var DEputOptions = {
