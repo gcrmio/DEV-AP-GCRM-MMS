@@ -56,7 +56,7 @@ function updateDE(access_token, phone_no){
     //Get send complete transmit records
     var selectFrom = function() {
         return new Promise(function(resolve, reject){
-            pool.query(`SELECT cust_id, phone_no from transmit WHERE cust_id IN ('KR00000005', 'KR00000006', 'KR00000007')`, function(err, result) {
+            pool.query(`SELECT cust_id, phone_no, success_yn from transmit WHERE cust_id IN ('KR00000005', 'KR00000006', 'KR00000007')`, function(err, result) {
                 if(err)
                     return reject(err);
                 resolve(result.rows);
@@ -66,7 +66,7 @@ function updateDE(access_token, phone_no){
     
     selectFrom()
     .then(function(result){
-        //console.log(result);
+        console.log(result);
         for(var i = 0; i < result.length; i++){
             pKey.cust_id = result[i]['cust_id'];
             pValue.phone_no = result[i]['phone_no'];
@@ -90,7 +90,7 @@ function updateDE(access_token, phone_no){
         request(DEputOptions, function(error, response){
             console.log(error, response.body);
         })
-        
+
     }).catch(function(err){
         console.log(err);   
     });
