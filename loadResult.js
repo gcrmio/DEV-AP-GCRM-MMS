@@ -1,7 +1,7 @@
 "use strict";
 var request = require('request');
-var pg = require('pg');
-const dbconfig = {
+const {Pool, Client} = require('pg');
+const pool = new Pool({
     host: process.env.DB_host,
     user: process.env.DB_user,
     password: process.env.DB_password,
@@ -10,17 +10,7 @@ const dbconfig = {
     ssl: {
       rejectUnauthorized: false
     }
-  }
-
-console.log('PG Connect ==============================');
-const client = new pg.Client(dbconfig);
-client.connect(err =>{
-if(err){
-    console.log('Failed to connect db ' + err);
-} else {
-    console.log('Connect to db done!');
-}
-})
+});
 
 module.exports.checkapi = function(req, res){
     var payload = {
