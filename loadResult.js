@@ -52,7 +52,6 @@ var payload2 = [];
 function updateDE(access_token, phone_no){
     var pKey = {};
     var pValue = {};
-
     //Get send complete transmit records
     var selectFrom = function() {
         return new Promise(function(resolve, reject){
@@ -68,12 +67,16 @@ function updateDE(access_token, phone_no){
     .then(function(result){
 
         for(var i = 0; i < result.length; i++){
-            pKey[i].cust_id = result[i]['cust_id'];
-            pValue[i].phone_no = result[i]['phone_no'];
-            payload2.push({keys:pKey, values:pValue});
+            
+            pKey.cust_id = result['cust_id'];
+            console.log(pKey);
+            pValue.phone_no = result['phone_no'];
+            console.log(pValue);
+            console.log(i+'=====');
+
         }
-        console.log('PAYLOAD IS HERE');
-        console.log(payload2);
+        // console.log('PAYLOAD IS HERE');
+        // console.log(payload2);
         var DEputOptions = {
             uri: 'https://mcycnrl05rhxlvjpny59rqschtx4.rest.marketingcloudapis.com/hub/v1/dataevents/9fc86fa4-4c40-ec11-ba40-f40343ce83b8/rowset',
             body: JSON.stringify(payload2),
@@ -88,9 +91,9 @@ function updateDE(access_token, phone_no){
             account_id: process.env.ACCOUNT_ID
         }
     
-        request(DEputOptions, function(error, response){
-            console.log(error, response.body);
-        })
+        // request(DEputOptions, function(error, response){
+            // console.log(error, response.body);
+        // })
 
     }).catch(function(err){
         console.log(err);   
