@@ -65,7 +65,7 @@ function sendMsg(subject, msg, dest, time, attachment){
     const url = 'https://oms.every8d.com/API21/HTTP/MMS/sendMMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
-    const type = 'jpg';
+    const type = 'jpeg';
     var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&TYPE='+type+'&ATTACHMENT='+attachment;
     console.log(geturl);
     console.log('========================================GETURL=============================================================================');
