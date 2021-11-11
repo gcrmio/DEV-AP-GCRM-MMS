@@ -66,7 +66,7 @@ function sendMsg(subject, msg, dest, time, attachment){
     const password = process.env.Epassword;
     const type = 'jpg';
     
-    var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ST='+time+'&ATTACHMENT='+attachment+'&TYPE='+type;
+    var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ST='+time+'&ATTACHMENT='+attachment;
     console.log(geturl);
     console.log('========================================GETURL=============================================================================');
     request.get({
