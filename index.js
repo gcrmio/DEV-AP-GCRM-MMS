@@ -46,13 +46,13 @@ app.get('/', (req, res) => {
 
 //02. Send MMS
 app.get('/sendMMS', (req, res) => {
-    try {
-        console.log("sendMsg=======================================");
+    // try {
+        // console.log("sendMsg=======================================");
         sendMMS.dbSelect();
         res.send('Send Msg Complete!');
-    } catch (error) {
-        console.log('There was an error!');
-    }
+    // } catch (error) {
+        // console.log('There was an error!');
+    // }
 })
 
 //03. Receive Result
