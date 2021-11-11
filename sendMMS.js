@@ -44,6 +44,7 @@ module.exports.dbSelect = function(){
         var plan_date = urlencode(row.plan_date);
         var time = urlencode(row.send_date);
         var success_yn = urlencode(row.success_yn);
+        var attachment = '';
         var bucketParams = {
           Bucket: process.env.S3_BUCKET_NAME, Key: 'APPS/TEST/MMSTW/'+cust_id+'_'+plan_date+'_test1.jpg'
         }
@@ -53,6 +54,7 @@ module.exports.dbSelect = function(){
           } else {
             //console.log(data.Body);
             var attachment = Buffer.from(data.Body, 'utf8').toString('base64');
+            return attachment;
           }
         });
         console.log("Call sendMsg function====================================================");
