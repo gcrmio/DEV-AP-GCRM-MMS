@@ -24,7 +24,7 @@ AWS.config.update({
 });
 
 module.exports.dbSelect = function(){
-  const sql = `SELECT cust_id, phone_no, msg_id, msg_subject_adj, msg_body_text_adj, msg_body_image_adj_file, msg_type, plan_date, send_date, success_yn FROM transmit WHERE cust_id IN ('TW99999999', 'TW99999998')`
+  const sql = `SELECT cust_id, phone_no, msg_id, msg_subject_adj, msg_body_text_adj, msg_body_image_adj_file, msg_type, plan_date, send_date, success_yn FROM transmit WHERE cust_id IN ('TW99999999', 'TW99999998', 'TW99999997)`
 
   pool.query(sql, (err, res) => {
     if(err){
@@ -69,20 +69,20 @@ function sendMsg(subject, msg, dest, time, attachment){
     var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ST='+time+'&ATTACHMENT='+attachment+'&TYPE='+type;
     console.log(geturl);
     console.log('========================================GETURL=============================================================================');
-    request.get({
-        url: geturl
-    }, function(error, response, html){
-        if(error){
-            console.log(error);
-        }
-        console.log('Received Server Data!');
+    // request.get({
+        // url: geturl
+    // }, function(error, response, html){
+        // if(error){
+            // console.log(error);
+        // }
+        // console.log('Received Server Data!');
         //console.log(html);
         //var tmp = response.body;
         //var result = tmp.split(',');
-        console.log(response.body);
+        // console.log(response.body);
         //var msg_batch_id = result[4];        
         //updateBatchId(dest, msg_batch_id);
-    })
+    // })
 }
 
 function updateBatchId(dest, msg_batch_id){
