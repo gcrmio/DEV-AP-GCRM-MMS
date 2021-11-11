@@ -2,10 +2,10 @@
 var pg = require('pg');
 var urlencode = require('urlencode');
 var request = require('request');
+const {Pool, Client} = require('pg');
 const AWS = require('aws-sdk');
 
-//PG Setup
-const dbconfig = {
+const pool = new Pool({
     host: process.env.DB_host,
     user: process.env.DB_user,
     password: process.env.DB_password,
@@ -14,19 +14,8 @@ const dbconfig = {
     ssl: {
       rejectUnauthorized: false
     }
-  }
-  
-  console.log('PG Connect ==============================');
-  const client = new pg.Client(dbconfig);
-  client.connect(err =>{
-    if(err){
-      console.log('Failed to connect db ' + err);
-    } else {
-      console.log('Connect to db done!');
-    }
-  })
+});
 
-//AWS Setup
 const s3 = new AWS.S3();
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -34,57 +23,45 @@ AWS.config.update({
   region: 'us-east-1',
 });
 
-var bucketParams = {
-  Bucket: process.env.S3_BUCKET_NAME, Key: 'APPS/TEST/MMSTW/TW99999999_20211111_test1.jpg'
-}
 module.exports.dbSelect = function(){
-  s3.getObject(bucketParams, function(err, data){
+  const sql = `SELECT cust_id, phone_no, msg_id, msg_subject_adj, msg_body_text_adj, msg_body_image_adj_file, msg_type, plan_date, send_date, success_yn FROM transmit WHERE cust_id IN ('TW99999999', 'TW99999998')`
+
+  client.query(sql, (err, res) => {
     if(err){
-      console.log("Error", err);
+      console.log(err.stack);
     } else {
-      console.log(data.Body);
-      let imgData = data.Body;
-      read(imgData);
-    }
-  });
-}
-function read(imgData){
-  var attachment = Buffer.from(imgData, 'utf8').toString('base64');
-  console.log('Base64Encode======================================================================');
-  console.log(attachment);
-}
-/*
-module.exports.dbSelect = function(){
-    
-    const sql = `SELECT cust_id, phone_no, msg_id, msg_subject_adj, msg_body_text_adj, msg_body_image_adj_file, msg_type, plan_date, send_date, success_yn FROM transmit WHERE cust_id IN ('TW99999999', 'TW99999998')`
-  
-    client.query(sql, (err, res) => {
-      if(err){
-        console.log(err.stack);
-      } else {
-        //console.log(res.rows);
-        for(const row of res.rows){
-          var cust_id = urlencode(row.cust_id);
-          var dest = urlencode(row.phone_no);
-          var msg_id = urlencode(row.msg_id);
-          var subject = urlencode(row.msg_subject_adj);
-          var msg = urlencode(row.msg_body_text_adj);
-          console.log('msg:'+`\n`+msg);
-          console.log('msg length: ' +msg.length+ `\n`);
-          var msg_body_image_adj_file = urlencode(row.msg_body_image_adj_file);
-          var msg_type = urlencode(row.msg_type);
-          var plan_date = urlencode(row.plan_date);
-          var time = urlencode(row.send_date);
-          var success_yn = urlencode(row.success_yn);
-
-          console.log("Call sendMsg function====================================================");
-          //sendMsg(subject, msg, dest, time);
+      //console.log(res.rows);
+      for(const row of res.rows){
+        var cust_id = urlencode(row.cust_id);
+        var dest = urlencode(row.phone_no);
+        var msg_id = urlencode(row.msg_id);
+        var subject = urlencode(row.msg_subject_adj);
+        var msg = urlencode(row.msg_body_text_adj);
+        console.log('msg:'+`\n`+msg);
+        console.log('msg length: ' +msg.length+ `\n`);
+        var msg_body_image_adj_file = urlencode(row.msg_body_image_adj_file);
+        var msg_type = urlencode(row.msg_type);
+        var plan_date = urlencode(row.plan_date);
+        var time = urlencode(row.send_date);
+        var success_yn = urlencode(row.success_yn);
+        var bucketParams = {
+          Bucket: process.env.S3_BUCKET_NAME, Key: 'APPS/TEST/MMSTW/'+cust_id+'_'+plan_date+'_test1.jpg'
         }
+        s3.getObject(bucketParams, function(err, data){
+          if(err){
+            console.log("Error", err);
+          } else {
+            //console.log(data.Body);
+            var attachment = Buffer.from(data.Body, 'utf8').toString('base64');
+          }
+        });
+        console.log("Call sendMsg function====================================================");
+        sendMsg(subject, msg, dest, time, attachment);
       }
-    })
-  }
+    }
+  })
 
-function sendMsg(subject, msg, dest, time){
+function sendMsg(subject, msg, dest, time, attachment){
     const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
@@ -92,20 +69,20 @@ function sendMsg(subject, msg, dest, time){
     
     var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ST='+time+'&ATTACHMENT='+attachment+'&TYPE='+type;
     console.log(geturl);
-    console.log('======================');
-    request.get({
-        url: geturl
-    }, function(error, response, html){
-        if(error){
-            console.log(error);
-        }
-        console.log('Received Server Data!');
-        console.log(html);
-        var tmp = response.body;
-        var result = tmp.split(',');
-        var msg_batch_id = result[4];        
-        updateBatchId(dest, msg_batch_id);
-    })
+    console.log('========================================GETURL=============================================================================');
+    // request.get({
+        // url: geturl
+    // }, function(error, response, html){
+        // if(error){
+            // console.log(error);
+        // }
+        // console.log('Received Server Data!');
+        // console.log(html);
+        // var tmp = response.body;
+        // var result = tmp.split(',');
+        // var msg_batch_id = result[4];        
+        //updateBatchId(dest, msg_batch_id);
+    // })
 }
 
 function updateBatchId(dest, msg_batch_id){
@@ -130,4 +107,4 @@ function updateBatchId(dest, msg_batch_id){
         }
       })
 }
-*/
+}
