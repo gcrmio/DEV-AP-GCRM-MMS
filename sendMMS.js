@@ -49,8 +49,8 @@ module.exports.dbSelect = function(){
           if(err){
             console.log("Error", err);
           } else {
-            var img = Buffer.from(data.Body, 'utf8').toString('base64');
-            var attachment = urlencode(img);
+            var attachment = Buffer.from(data.Body, 'utf8').toString('base64');
+            //var attachment = urlencode(img);
             sendMsg(subject, msg, dest, time, attachment);
           }
         });
