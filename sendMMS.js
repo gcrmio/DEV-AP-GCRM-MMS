@@ -37,17 +37,17 @@ AWS.config.update({
 var bucketParams = {
   Bucket: process.env.S3_BUCKET_NAME, Key: 'APPS/TEST/MMSTW/'
 }
+module.exports.dbSelect = function(){
+  s3.getObject(bucketParams, function(err, data){
+    if(err){
+      console.log("Error", err);
+    } else {
+      const body = Buffer.from(data.Body).toString('utf8');
+      console.log("Success", body);
+    }
 
-s3.getObject(bucketParams, function(err, data){
-  if(err){
-    console.log("Error", err);
-  } else {
-    const body = Buffer.from(data.Body).toString('utf8');
-    console.log("Success", body);
-  }
-
-});
-
+  });
+}
 /*
 module.exports.dbSelect = function(){
     
