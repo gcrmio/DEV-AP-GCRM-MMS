@@ -49,7 +49,8 @@ module.exports.dbSelect = function(){
           if(err){
             console.log("Error", err);
           } else {
-            var attachment = Buffer.from(data.Body, 'utf8').toString('base64');
+            var img = Buffer.from(data.Body, 'utf8').toString('base64');
+            var attachment = urlencode(img);
             sendMsg(subject, msg, dest, time, attachment);
           }
         });
@@ -66,7 +67,7 @@ function sendMsg(subject, msg, dest, time, attachment){
     const password = process.env.Epassword;
     const type = 'jpg';
     var retrytime = '1440';
-    var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ST='+time+'&RETRYTIME='+retrytime+'&ATTACHMENT="'+attachment+'"&TYPE='+type;
+    var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ST='+time+'&RETRYTIME='+retrytime+'&ATTACHMENT='+attachment+'&TYPE='+type;
     console.log(geturl);
     console.log('========================================GETURL=============================================================================');
     request.get({
