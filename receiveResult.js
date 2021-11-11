@@ -23,13 +23,20 @@ module.exports.listSelect = function(){
             })
         });
     }
+
+    var batchList = new Array();
     
     selectFrom()
     .then(function(result){
         console.log('result');
         console.log(result);
         console.log('result length= '+result.length);
+        for(var i = 0; i < result.length; i++){
+            var batch_id = result[i]['batch_id'];
+            batchList.push(batch_id);
+        }
     });
+    console.log(batchList);
 
     /*
     const url = 'https://oms.every8d.com/API21/HTTP/getDeliveryStatus.ashx';
