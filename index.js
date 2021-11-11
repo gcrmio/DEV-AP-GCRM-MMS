@@ -6,7 +6,7 @@ var pg = require('pg');
 var sendMMS = require('./sendMMS');
 var loadResult = require('./loadResult');
 var receiveResult = require('./receiveResult');
-
+const AWS = require('aws-sdk');
 // var http, options, proxy, url;
 // http = require("http");
 // url = require("url");
