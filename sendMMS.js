@@ -62,14 +62,14 @@ module.exports.dbSelect = function(){
 
 
 function sendMsg(subject, msg, dest, time, attachment){
-    const url = 'https://api.every8d.com/API21/HTTP/MMS/sendMMS.ashx';
+    const url = 'https://oms.every8d.com/API21/HTTP/MMS/sendMMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
     const type = 'jpg';
-    var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ATTACHMENT='+attachment+'&TYPE='+type;
+    var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&TYPE='+type+'&ATTACHMENT='+attachment;
     console.log(geturl);
     console.log('========================================GETURL=============================================================================');
-    request.get({
+    request.post({
         url: geturl
     }, function(error, response, html){
         if(error){
