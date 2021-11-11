@@ -7,27 +7,27 @@ var sendMMS = require('./sendMMS');
 var loadResult = require('./loadResult');
 var receiveResult = require('./receiveResult');
 
-var http, options, proxy, url;
-http = require("http");
-url = require("url");
-proxy = url.parse(process.env.QUOTAGUARDSTATIC_URL);
+// var http, options, proxy, url;
+// http = require("http");
+// url = require("url");
+// proxy = url.parse(process.env.QUOTAGUARDSTATIC_URL);
 
-//proxy setup
-target  = url.parse("https://ap-gcrm-mms.herokuapp.com/");
-options = {
-  hostname: proxy.hostname,
-  port: proxy.port || 80,
-  path: target.href,
-  headers: {
-    "Proxy-Authorization": "Basic " + (new Buffer(proxy.auth).toString("base64")),
-    "Host" : target.hostname
-  }
-};
+// //proxy setup
+// target  = url.parse("https://ap-gcrm-mms.herokuapp.com/");
+// options = {
+//   hostname: proxy.hostname,
+//   port: proxy.port || 80,
+//   path: target.href,
+//   headers: {
+//     "Proxy-Authorization": "Basic " + (new Buffer(proxy.auth).toString("base64")),
+//     "Host" : target.hostname
+//   }
+// };
 
-http.get(options, function(res) {
-  res.pipe(process.stdout);
-  return console.log("status code", res.statusCode);
-});
+// http.get(options, function(res) {
+//   res.pipe(process.stdout);
+//   return console.log("status code", res.statusCode);
+// });
 
 //Render Every8D page
 app.engine('html', require('ejs').renderFile);
