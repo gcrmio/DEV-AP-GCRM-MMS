@@ -35,7 +35,7 @@ AWS.config.update({
 });
 
 var bucketParams = {
-  Bucket: process.env.S3_BUCKET_NAME,
+  Bucket: process.env.S3_BUCKET_NAME, Key: 'APPS/TEST/MMSTW/'
 }
 
 s3.listObjects(bucketParams, function(err, data){
