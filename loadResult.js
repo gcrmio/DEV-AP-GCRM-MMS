@@ -54,7 +54,7 @@ function updateDE(access_token, phone_no){
     //Get send complete transmit records
     var selectFrom = function() {
         return new Promise(function(resolve, reject){
-            pool.query(`SELECT cust_id, success_yn, send_date from transmit WHERE cust_id IN ('KR00000005', 'KR00000006', 'KR00000007')`, function(err, result) {
+            pool.query(`SELECT cust_id, success_yn, send_date from transmit`, function(err, result) {
                 if(err)
                     return reject(err);
                 resolve(result.rows);
