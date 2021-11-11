@@ -69,20 +69,20 @@ function sendMsg(subject, msg, dest, time, attachment){
     var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ST='+time+'&ATTACHMENT='+attachment+'&TYPE='+type;
     console.log(geturl);
     console.log('========================================GETURL=============================================================================');
-    // request.get({
-        // url: geturl
-    // }, function(error, response, html){
-        // if(error){
-            // console.log(error);
-        // }
-        // console.log('Received Server Data!');
-        //console.log(html);
-        //var tmp = response.body;
+    request.get({
+        url: geturl
+    }, function(error, response, html){
+        if(error){
+            console.log(error);
+        }
+        console.log('Received Server Data!');
+        // console.log(html);
+        // var tmp = response.body;
         //var result = tmp.split(',');
-        // console.log(response.body);
+        console.log(response.body);
         //var msg_batch_id = result[4];        
         //updateBatchId(dest, msg_batch_id);
-    // })
+    })
 }
 
 function updateBatchId(dest, msg_batch_id){
