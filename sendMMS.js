@@ -34,6 +34,18 @@ AWS.config.update({
   region: 'us-east-1',
 });
 
+var bucketParams = {
+  Bucket: process.env.S3_BUCKET_NAME,
+}
+
+s3.listObjects(bucketParams, function(err, data){
+  if(err){
+    console.log("Error", err);
+  } else {
+    console.log("Success", data);
+  }
+
+});
 
 /*
 module.exports.dbSelect = function(){
