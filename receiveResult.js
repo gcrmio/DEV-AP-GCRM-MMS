@@ -13,6 +13,9 @@ const pool = new Pool({
 });
 
 module.exports.listSelect = function(){
+    const url = 'https://oms.every8d.com/API21/HTTP/getDeliveryStatus.ashx';
+    const uid = process.env.Euid;
+    const password = process.env.Epassword;
     //Get send complete transmit records
     var selectFrom = function() {
         return new Promise(function(resolve, reject){
@@ -32,43 +35,33 @@ module.exports.listSelect = function(){
         console.log(result);
         console.log('result length= '+result.length);
         for(var i = 0; i < result.length; i++){
-            var batch_id = result[i]['batch_id'];
-            batchList.push(batch_id);
+            console.log('Loop #'+i+'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            var bidValue = result[i]['batch_id'];
+            batchList.push(bidValue);
+            var geturl = url+'?UID='+uid+'&PWD='+password+'&BID='+bidValue+'&PNO=';
+            console.log(geturl);
+            request.get({
+                url: geturl
+            }, function(error, response, html){
+                if(error){
+                    console.log(error);
+                }
+                console.log('Received Server Data!');
+                var tmp = response.body;
+                var result = tmp.replace(/\r?\n|\r/g, `\t`).split(`\t`);
+                // var sms_count = result[0];
+                // console.log("sms_count= "+sms_count);
+                // var sms_name = result[1];
+                // console.log("sms_name= "+sms_name);
+                var sms_mobile = result[2];
+                var sms_send_time = result[3];
+                // var sms_cost = result[4];
+                // console.log("sms_cost= "+sms_cost);
+                var sms_status = result[5];
+                updateTransmit(sms_mobile, sms_send_time, sms_status);
+            })
         }
-        console.log('Batch List=====');
-        console.log(batchList);
-    });
-    
-    /*
-    const url = 'https://oms.every8d.com/API21/HTTP/getDeliveryStatus.ashx';
-    const uid = process.env.Euid;
-    const password = process.env.Epassword;
-    var bidValue = BID;
-    console.log('bidValue= '+bidValue);
-    var geturl = url+'?UID='+uid+'&PWD='+password+'&BID='+bidValue+'&PNO=';
-    console.log(geturl);
-    console.log('======================');
-    request.get({
-        url: geturl
-    }, function(error, response, html){
-        if(error){
-            console.log(error);
-        }
-        console.log('Received Server Data!');
-        var tmp = response.body;
-        var result = tmp.replace(/\r?\n|\r/g, `\t`).split(`\t`);
-        // var sms_count = result[0];
-        // console.log("sms_count= "+sms_count);
-        // var sms_name = result[1];
-        // console.log("sms_name= "+sms_name);
-        var sms_mobile = result[2];
-        var sms_send_time = result[3];
-        // var sms_cost = result[4];
-        // console.log("sms_cost= "+sms_cost);
-        var sms_status = result[5];
-        updateTransmit(sms_mobile, sms_send_time, sms_status);
-    })
-    */
+    });  
 }
 
 function updateTransmit(sms_mobile, sms_send_time, sms_status){
@@ -161,7 +154,7 @@ function updateTransmit(sms_mobile, sms_send_time, sms_status){
                 WHERE transmit.phone_no = t.phone_no`
     console.log(sql);
 
-    client.query(sql, (err, res) => {
+    pool.query(sql, (err, res) => {
         if(err){
           console.log(err.stack);
         } else {
