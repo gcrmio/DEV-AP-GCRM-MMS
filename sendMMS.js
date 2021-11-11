@@ -61,7 +61,7 @@ module.exports.dbSelect = function(){
 
 
 function sendMsg(subject, msg, dest, time, attachment){
-    const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
+    const url = 'https://oms.every8d.com/API21/HTTP/sendMMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
     const type = 'jpg';
