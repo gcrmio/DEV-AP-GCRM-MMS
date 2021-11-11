@@ -42,7 +42,7 @@ module.exports.dbSelect = function(){
     if(err){
       console.log("Error", err);
     } else {
-      const body = Buffer.from(data.Body).toString('utf8');
+      const body = Buffer.from(data.Body).toString('UTF-8');
       console.log("Success", body);
     }
 
