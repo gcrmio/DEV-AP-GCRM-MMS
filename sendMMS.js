@@ -37,14 +37,11 @@ module.exports.dbSelect = function(){
         var msg_id = urlencode(row.msg_id);
         var subject = urlencode(row.msg_subject_adj);
         var msg = urlencode(row.msg_body_text_adj);
-        console.log('msg:'+`\n`+msg);
-        console.log('msg length: ' +msg.length+ `\n`);
         var msg_body_image_adj_file = urlencode(row.msg_body_image_adj_file);
         var msg_type = urlencode(row.msg_type);
         var plan_date = urlencode(row.plan_date);
         var time = urlencode(row.send_date);
         var success_yn = urlencode(row.success_yn);
-        var attachment = '';
         var bucketParams = {
           Bucket: process.env.S3_BUCKET_NAME, Key: 'APPS/TEST/MMSTW/'+cust_id+'_'+plan_date+'_test1.jpg'
         }
@@ -52,18 +49,18 @@ module.exports.dbSelect = function(){
           if(err){
             console.log("Error", err);
           } else {
-            //console.log(data.Body);
             var attachment = Buffer.from(data.Body, 'utf8').toString('base64');
-            return attachment;
+            console.log(attachment);
           }
         });
         console.log("Call sendMsg function====================================================");
-        sendMsg(subject, msg, dest, time, attachment);
+        //sendMsg(subject, msg, dest, time);
       }
     }
   })
 
-function sendMsg(subject, msg, dest, time, attachment){
+
+function sendMsg(subject, msg, dest, time){
     const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
