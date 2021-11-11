@@ -3,7 +3,7 @@ var pg = require('pg');
 var urlencode = require('urlencode');
 var request = require('request');
 const AWS = require('aws-sdk');
-
+const fs = require('fs');
 //PG Setup
 const dbconfig = {
     host: process.env.DB_host,
@@ -35,7 +35,7 @@ AWS.config.update({
 });
 
 var bucketParams = {
-  Bucket: process.env.S3_BUCKET_NAME, Key: 'APPS/TEST/MMSTW/'
+  Bucket: process.env.S3_BUCKET_NAME, Key: 'APPS/TEST/MMSTW/TW99999999_20211111_test1.jpg'
 }
 module.exports.dbSelect = function(){
   s3.getObject(bucketParams, function(err, data){
