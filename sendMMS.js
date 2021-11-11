@@ -34,9 +34,10 @@ module.exports.dbSelect = function(){
       for(const row of res.rows){
         var cust_id = urlencode(row.cust_id);
         var dest = urlencode(row.phone_no);
+        var dest = row.phone_no;
         var msg_id = urlencode(row.msg_id);
-        var subject = urlencode(row.msg_subject_adj);
-        var msg = urlencode(row.msg_body_text_adj);
+        var subject = row.msg_subject_adj;
+        var msg = row.msg_body_text_adj;
         var msg_body_image_adj_file = urlencode(row.msg_body_image_adj_file);
         var msg_type = urlencode(row.msg_type);
         var plan_date = urlencode(row.plan_date);
