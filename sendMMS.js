@@ -66,7 +66,8 @@ function sendMsg(subject, msg, dest, time, attachment){
     const uid = process.env.Euid;
     const password = process.env.Epassword;
     const type = 'jpeg';
-
+    console.log(dest);
+    console.log('dest==================');
     var options = {
       'method': 'GET',
       'url': 'https://oms.every8d.com/API21/HTTP/MMS/sendMMS.ashx',
