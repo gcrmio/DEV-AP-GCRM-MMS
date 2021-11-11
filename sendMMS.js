@@ -42,7 +42,8 @@ s3.getObject(bucketParams, function(err, data){
   if(err){
     console.log("Error", err);
   } else {
-    console.log("Success", data);
+    const body = Buffer.from(data.Body).toString('utf8');
+    console.log("Success", body);
   }
 
 });
