@@ -76,11 +76,12 @@ function sendMsg(subject, msg, dest, time, attachment){
             console.log(error);
         }
         console.log('Received Server Data!');
-        console.log(html);
-        var tmp = response.body;
-        var result = tmp.split(',');
-        var msg_batch_id = result[4];        
-        updateBatchId(dest, msg_batch_id);
+        //console.log(html);
+        //var tmp = response.body;
+        //var result = tmp.split(',');
+        console.log(response);
+        //var msg_batch_id = result[4];        
+        //updateBatchId(dest, msg_batch_id);
     })
 }
 
@@ -98,7 +99,7 @@ function updateBatchId(dest, msg_batch_id){
                 WHERE transmit.phone_no = t.phone_no`
     console.log(sql);
 
-    client.query(sql, (err, res) => {
+    pool.query(sql, (err, res) => {
         if(err){
           console.log(err.stack);
         } else {
