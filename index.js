@@ -56,13 +56,19 @@ app.get('/sendMMS', (req, res) => {
 })
 
 //03. Receive Result
-app.get('/receiveResult/:BID', (req, res) => {
-
-        console.log("sendStat=======================================");
-        var BID = req.params.BID;
-        receiveResult.sendStat(BID);
-        res.send('Send Stat Complete!');
+app.get('/receiveResult', (req, res) => {
+  console.log('Receive Result===============================');
+  receiveResult.listSelect();
+  res.send('Receive Result Complete!');
 })
+// app.get('/receiveResult/:BID', (req, res) => {
+
+//         console.log("sendStat=======================================");
+//         var BID = req.params.BID;
+//         receiveResult.sendStat(BID);
+//         res.send('Send Stat Complete!');
+// })
+
 
 //04. Load Result
 app.get('/loadResult', (req, res) => {

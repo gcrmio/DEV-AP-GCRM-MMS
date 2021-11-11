@@ -1,7 +1,7 @@
 "use strict";
 var request = require('request');
-var pg = require('pg');
-const dbconfig = {
+const {Pool, Client} = require('pg');
+const pool = new Pool({
     host: process.env.DB_host,
     user: process.env.DB_user,
     password: process.env.DB_password,
@@ -10,19 +10,28 @@ const dbconfig = {
     ssl: {
       rejectUnauthorized: false
     }
-  }
-  
-  console.log('PG Connect ==============================');
-  const client = new pg.Client(dbconfig);
-  client.connect(err =>{
-    if(err){
-      console.log('Failed to connect db ' + err);
-    } else {
-      console.log('Connect to db done!');
-    }
-  })
+});
 
-module.exports.sendStat = function(BID){
+module.exports.listSelect = function(){
+    //Get send complete transmit records
+    var selectFrom = function() {
+        return new Promise(function(resolve, reject){
+            pool.query(`SELECT batch_id from transmit WHERE cust_id IN ('KR00000005', 'KR00000006', 'KR00000007')`, function(err, result) {
+                if(err)
+                    return reject(err);
+                resolve(result.rows);
+            })
+        });
+    }
+    
+    selectFrom()
+    .then(function(result){
+        console.log('result');
+        console.log(result);
+        console.log('result length= '+result.length);
+    });
+
+    /*
     const url = 'https://oms.every8d.com/API21/HTTP/getDeliveryStatus.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
@@ -51,6 +60,7 @@ module.exports.sendStat = function(BID){
         var sms_status = result[5];
         updateTransmit(sms_mobile, sms_send_time, sms_status);
     })
+    */
 }
 
 function updateTransmit(sms_mobile, sms_send_time, sms_status){
