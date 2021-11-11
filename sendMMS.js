@@ -79,7 +79,7 @@ function sendMsg(subject, msg, dest, time, attachment){
         //console.log(html);
         //var tmp = response.body;
         //var result = tmp.split(',');
-        console.log(response);
+        console.log(response.body);
         //var msg_batch_id = result[4];        
         //updateBatchId(dest, msg_batch_id);
     })
