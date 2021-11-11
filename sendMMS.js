@@ -2,6 +2,7 @@
 var pg = require('pg');
 var urlencode = require('urlencode');
 var request = require('request');
+const AWS = require('aws-sdk');
 
 //PG Setup
 const dbconfig = {
@@ -25,6 +26,22 @@ const dbconfig = {
     }
   })
 
+//AWS Setup
+const s3 = new AWS.S3();
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET_KEY
+});
+
+s3.listBuckets(function(err, data) {
+  if (err) {
+    console.log("Error", err);
+  } else {
+    console.log("Success", data.Buckets);
+  }
+});
+
+/*
 module.exports.dbSelect = function(){
     
     const sql = `SELECT cust_id, phone_no, msg_id, msg_subject_adj, msg_body_text_adj, msg_body_image_adj_file, msg_type, plan_date, send_date, success_yn FROM transmit WHERE cust_id = 'KR00000004'`
@@ -100,3 +117,4 @@ function updateBatchId(dest, msg_batch_id){
         }
       })
 }
+*/
