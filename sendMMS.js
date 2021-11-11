@@ -3,7 +3,7 @@ var pg = require('pg');
 var urlencode = require('urlencode');
 var request = require('request');
 const AWS = require('aws-sdk');
-const fs = require('fs');
+
 //PG Setup
 const dbconfig = {
     host: process.env.DB_host,
@@ -42,16 +42,21 @@ module.exports.dbSelect = function(){
     if(err){
       console.log("Error", err);
     } else {
-      const body = Buffer.from(data.Body).toString('UTF-8');
-      console.log("Success", body);
+      console.log(data.Body);
+      let imgData = data.Body;
+      read(imgData);
     }
-
   });
+}
+function read(imgData){
+  var attachment = Buffer.from(imgData, 'utf8').toString('base64');
+  console.log('Base64Encode======================================================================');
+  console.log(attachment);
 }
 /*
 module.exports.dbSelect = function(){
     
-    const sql = `SELECT cust_id, phone_no, msg_id, msg_subject_adj, msg_body_text_adj, msg_body_image_adj_file, msg_type, plan_date, send_date, success_yn FROM transmit WHERE cust_id = 'KR00000004'`
+    const sql = `SELECT cust_id, phone_no, msg_id, msg_subject_adj, msg_body_text_adj, msg_body_image_adj_file, msg_type, plan_date, send_date, success_yn FROM transmit WHERE cust_id IN ('TW99999999', 'TW99999998')`
   
     client.query(sql, (err, res) => {
       if(err){
@@ -83,8 +88,9 @@ function sendMsg(subject, msg, dest, time){
     const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
-
-    var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ST='+time;
+    const type = 'jpg';
+    
+    var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&ST='+time+'&ATTACHMENT='+attachment+'&TYPE='+type;
     console.log(geturl);
     console.log('======================');
     request.get({
