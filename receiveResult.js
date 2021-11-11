@@ -35,9 +35,10 @@ module.exports.listSelect = function(){
             var batch_id = result[i]['batch_id'];
             batchList.push(batch_id);
         }
+        console.log('Batch List=====');
+        console.log(batchList);
     });
-    console.log(batchList);
-
+    
     /*
     const url = 'https://oms.every8d.com/API21/HTTP/getDeliveryStatus.ashx';
     const uid = process.env.Euid;
