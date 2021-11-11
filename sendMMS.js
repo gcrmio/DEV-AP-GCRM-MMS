@@ -50,7 +50,7 @@ module.exports.dbSelect = function(){
             console.log("Error", err);
           } else {
             var attachment = Buffer.from(data.Body, 'utf8').toString('base64');
-            console.log(attachment);
+            sendMsg(subject, msg, dest, time, attachment);
           }
         });
         console.log("Call sendMsg function====================================================");
@@ -60,7 +60,7 @@ module.exports.dbSelect = function(){
   })
 
 
-function sendMsg(subject, msg, dest, time){
+function sendMsg(subject, msg, dest, time, attachment){
     const url = 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx';
     const uid = process.env.Euid;
     const password = process.env.Epassword;
