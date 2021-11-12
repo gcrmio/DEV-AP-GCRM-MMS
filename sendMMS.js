@@ -24,7 +24,7 @@ AWS.config.update({
 });
 
 module.exports.dbSelect = function(){
-  const sql = `SELECT cust_id, phone_no, msg_id, msg_subject_adj, msg_body_text_adj, msg_body_image_adj_file, msg_type, plan_date, send_date, success_yn FROM transmit WHERE cust_id IN('KR00000001', 'KR00000002', 'KR00000003','TW99999998','TW99999999')`
+  const sql = `SELECT cust_id, phone_no, msg_id, msg_subject_adj, msg_body_text_adj, msg_body_image_adj_file, msg_type, plan_date, send_date, success_yn FROM transmit WHERE cust_id IN('TW99999999')`
 
   pool.query(sql, (err, res) => {
     if(err){
@@ -89,13 +89,13 @@ function sendMMS(subject, msg, dest, time, attachment){
         'ATTACHMENT': attachment
       }
     };
-    // request(options, function (error, response) {
-      // if (error) throw new Error(error);
-      // var tmp = response.body;
-      // var result = tmp.split(',');
-      // var msg_batch_id = result[4];
-      // updateBatchId(dest, msg_batch_id);
-    // });
+    request(options, function (error, response) {
+      if (error) throw new Error(error);
+      var tmp = response.body;
+      var result = tmp.split(',');
+      var msg_batch_id = result[4];
+      updateBatchId(dest, msg_batch_id);
+    });
 }
 
 function sendSMS(subject, msg, dest, time){
@@ -119,13 +119,13 @@ function sendSMS(subject, msg, dest, time){
       'ST': time
     }
   };
-  // request(options, function (error, response) {
-    // if (error) throw new Error(error);
-    // var tmp = response.body;
-    // var result = tmp.split(',');
-    // var msg_batch_id = result[4];
-    // updateBatchId(dest, msg_batch_id);
-  // });
+  request(options, function (error, response) {
+    if (error) throw new Error(error);
+    var tmp = response.body;
+    var result = tmp.split(',');
+    var msg_batch_id = result[4];
+    updateBatchId(dest, msg_batch_id);
+  });
 }
 
 function updateBatchId(dest, msg_batch_id){
