@@ -38,7 +38,11 @@ module.exports.dbSelect = function(){
         var msg = row.msg_body_text_adj;
         var time = row.send_date;
         var msg_type = row.msg_type;
-        if(msg_type = 'MMS'){
+        if(msg_type = 'SMS' || 'LMS'){
+          sendSMS(subject, msg, dest,time);
+          console.log('SEND SMS TO: '+cust_id);
+        }
+        else if(msg_type = 'MMS'){
           var bucketParams = {
             Bucket: process.env.S3_BUCKET_NAME, Key: 'APPS/TEST/MMSTW/'+cust_id+'_20211111_test1.jpg'
           }
@@ -48,12 +52,10 @@ module.exports.dbSelect = function(){
             } else {
               var attachment = Buffer.from(data.Body, 'utf8').toString('base64');
               sendMMS(subject, msg, dest, time, attachment);
+              console.log('SEND MMS TO: '+cust_id);
             }
           });
-        } else{
-          sendSMS(subject, msg, dest, time);
         }
-
       }
     }
   })
@@ -81,12 +83,13 @@ function sendMMS(subject, msg, dest, time, attachment){
         'ATTACHMENT': attachment
       }
     };
-    request(options, function (error, response) {
-      if (error) throw new Error(error);
-      console.log(response.body);
-      var msg_batch_id = response.body[5];
-      updateBatchId(dest, msg_batch_id);
-    });
+    // request(options, function (error, response) {
+      // if (error) throw new Error(error);
+      // var tmp = response.body;
+      // var result = tmp.split(',');
+      // var msg_batch_id = result[4];
+      // updateBatchId(dest, msg_batch_id);
+    // });
 }
 
 function sendSMS(subject, msg, dest, time){
@@ -112,8 +115,9 @@ function sendSMS(subject, msg, dest, time){
   };
   request(options, function (error, response) {
     if (error) throw new Error(error);
-    console.log(response.body);
-    var msg_batch_id = response.body[5];
+    var tmp = response.body;
+    var result = tmp.split(',');
+    var msg_batch_id = result[4];
     updateBatchId(dest, msg_batch_id);
   });
 }
