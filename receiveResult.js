@@ -35,7 +35,7 @@ module.exports.listSelect = function(){
         console.log(result);
         console.log('result length= '+result.length);
         for(var i = 0; i < result.length; i++){
-            console.log('Loop #'+i+'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            console.log('Loop #'+i+'**********');
             var bidValue = result[i]['batch_id'];
             batchList.push(bidValue);
             var geturl = url+'?UID='+uid+'&PWD='+password+'&BID='+bidValue+'&PNO=';
