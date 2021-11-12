@@ -24,7 +24,7 @@ AWS.config.update({
 });
 
 module.exports.dbSelect = function(){
-  const sql = `SELECT cust_id, phone_no, msg_id, msg_subject_adj, msg_body_text_adj, msg_body_image_adj_file, msg_type, plan_date, send_date, success_yn FROM transmit WHERE cust_id IN ('TW99999999', 'TW99999998')`
+  const sql = `SELECT cust_id, phone_no, msg_id, msg_subject_adj, msg_body_text_adj, msg_body_image_adj_file, msg_type, plan_date, send_date, success_yn FROM transmit WHERE cust_id IN ('TW99999998', 'TW99999999')`
 
   pool.query(sql, (err, res) => {
     if(err){
@@ -32,38 +32,32 @@ module.exports.dbSelect = function(){
     } else {
       //console.log(res.rows);
       for(const row of res.rows){
-        var cust_id = urlencode(row.cust_id);
-        var dest = urlencode(row.phone_no);
         var dest = row.phone_no;
-        var msg_id = urlencode(row.msg_id);
         var subject = row.msg_subject_adj;
         var msg = row.msg_body_text_adj;
-        var msg_body_image_adj_file = urlencode(row.msg_body_image_adj_file);
-        var msg_type = urlencode(row.msg_type);
-        var plan_date = urlencode(row.plan_date);
-        var time = urlencode(row.send_date);
-        var success_yn = urlencode(row.success_yn);
-        var bucketParams = {
-          Bucket: process.env.S3_BUCKET_NAME, Key: 'APPS/TEST/MMSTW/'+cust_id+'_'+plan_date+'_test1.jpg'
-        }
-        s3.getObject(bucketParams, function(err, data){
-          if(err){
-            console.log("Error", err);
-          } else {
-            var attachment = Buffer.from(data.Body, 'utf8').toString('base64');
-            //var attachment = urlencode(img);
-            sendMsg(subject, msg, dest, time, attachment);
+        var time = row.send_date;
+        var msg_type = row.msg_type;
+        if(msg_type = 'MMS'){
+          var bucketParams = {
+            Bucket: process.env.S3_BUCKET_NAME, Key: 'APPS/TEST/MMSTW/'+cust_id+'_'+plan_date+'_test1.jpg'
           }
-        });
-        console.log("Call sendMsg function====================================================");
-        //sendMsg(subject, msg, dest, time);
+          s3.getObject(bucketParams, function(err, data){
+            if(err){
+              console.log("Error", err);
+            } else {
+              var attachment = Buffer.from(data.Body, 'utf8').toString('base64');
+              sendMMS(subject, msg, dest, time, attachment);
+            }
+          });
+        } else{
+          sendSMS(subject, msg, dest, time);
+        }
+
       }
     }
   })
 
-
-function sendMsg(subject, msg, dest, time, attachment){
-    const url = 'https://oms.every8d.com/API21/HTTP/MMS/sendMMS.ashx';
+function sendMMS(subject, msg, dest, time, attachment){
     const uid = process.env.Euid;
     const password = process.env.Epassword;
     const type = 'jpeg';
@@ -81,6 +75,7 @@ function sendMsg(subject, msg, dest, time, attachment){
         'SB': subject,
         'MSG': msg,
         'DEST': dest,
+        'ST': time,
         'TYPE': type,
         'ATTACHMENT': attachment
       }
@@ -88,25 +83,36 @@ function sendMsg(subject, msg, dest, time, attachment){
     request(options, function (error, response) {
       if (error) throw new Error(error);
       console.log(response.body);
+      updateBatchId(dest, msg_batch_id);
     });
+}
 
-    // var geturl = url+'?UID='+uid+'&PWD='+password+'&SB='+subject+'&MSG='+msg+'&DEST='+dest+'&TYPE='+type+'&ATTACHMENT='+attachment;
-    // console.log(geturl);
-    // console.log('========================================GETURL=============================================================================');
-    // request.get({
-        // url: geturl
-    // }, function(error, response, html){
-        // if(error){
-            // console.log(error);
-        // }
-        // console.log('Received Server Data!');
-        // console.log(html);
-        // var tmp = response.body;
-        //var result = tmp.split(',');
-        // console.log(response.body);
-        //var msg_batch_id = result[4];        
-        //updateBatchId(dest, msg_batch_id);
-    // })
+function sendSMS(subject, msg, dest, time){
+  const uid = process.env.Euid;
+  const password = process.env.Epassword;
+  const type = 'jpeg';
+  console.log(dest);
+  console.log('dest==================');
+  var options = {
+    'method': 'GET',
+    'url': 'https://oms.every8d.com/API21/HTTP/sendSMS.ashx',
+    'headers': {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    form: {
+      'UID': process.env.Euid,
+      'PWD': process.env.Epassword,
+      'SB': subject,
+      'MSG': msg,
+      'DEST': dest,
+      'ST': time
+    }
+  };
+  request(options, function (error, response) {
+    if (error) throw new Error(error);
+    console.log(response.body);
+    updateBatchId(dest, msg_batch_id);
+  });
 }
 
 function updateBatchId(dest, msg_batch_id){
