@@ -84,7 +84,7 @@ function sendMMS(subject, msg, dest, time, attachment){
     request(options, function (error, response) {
       if (error) throw new Error(error);
       console.log(response.body);
-      var msg_batch_id = response.body[4];
+      var msg_batch_id = response.body[5];
       updateBatchId(dest, msg_batch_id);
     });
 }
@@ -113,7 +113,7 @@ function sendSMS(subject, msg, dest, time){
   request(options, function (error, response) {
     if (error) throw new Error(error);
     console.log(response.body);
-    var msg_batch_id = response.body[4];
+    var msg_batch_id = response.body[5];
     updateBatchId(dest, msg_batch_id);
   });
 }
