@@ -32,6 +32,7 @@ module.exports.dbSelect = function(){
     } else {
       //console.log(res.rows);
       for(const row of res.rows){
+        var cust_id = row.cust_id;
         var dest = row.phone_no;
         var subject = row.msg_subject_adj;
         var msg = row.msg_body_text_adj;
@@ -39,7 +40,7 @@ module.exports.dbSelect = function(){
         var msg_type = row.msg_type;
         if(msg_type = 'MMS'){
           var bucketParams = {
-            Bucket: process.env.S3_BUCKET_NAME, Key: 'APPS/TEST/MMSTW/'+cust_id+'_'+plan_date+'_test1.jpg'
+            Bucket: process.env.S3_BUCKET_NAME, Key: 'APPS/TEST/MMSTW/'+cust_id+'_20211111_test1.jpg'
           }
           s3.getObject(bucketParams, function(err, data){
             if(err){
