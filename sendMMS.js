@@ -113,13 +113,13 @@ function sendSMS(subject, msg, dest, time){
       'ST': time
     }
   };
-  request(options, function (error, response) {
-    if (error) throw new Error(error);
-    var tmp = response.body;
-    var result = tmp.split(',');
-    var msg_batch_id = result[4];
-    updateBatchId(dest, msg_batch_id);
-  });
+  // request(options, function (error, response) {
+    // if (error) throw new Error(error);
+    // var tmp = response.body;
+    // var result = tmp.split(',');
+    // var msg_batch_id = result[4];
+    // updateBatchId(dest, msg_batch_id);
+  // });
 }
 
 function updateBatchId(dest, msg_batch_id){
