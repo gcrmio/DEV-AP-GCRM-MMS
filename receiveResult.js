@@ -19,7 +19,7 @@ module.exports.listSelect = function(){
     //Get send complete transmit records
     var selectFrom = function() {
         return new Promise(function(resolve, reject){
-            pool.query(`SELECT batch_id from transmit WHERE cust_id IN ('KR00000005', 'KR00000006', 'KR00000007')`, function(err, result) {
+            pool.query(`SELECT batch_id from transmit WHERE cust_id IN ('TW999999999')`, function(err, result) {
                 if(err)
                     return reject(err);
                 resolve(result.rows);
