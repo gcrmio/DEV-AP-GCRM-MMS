@@ -38,23 +38,29 @@ module.exports.dbSelect = function(){
         var msg = row.msg_body_text_adj;
         var time = row.send_date;
         var msg_type = row.msg_type;
-        if(msg_type = 'SMS' || 'LMS'){
-          sendSMS(subject, msg, dest,time);
-          console.log('SEND SMS TO: '+cust_id);
-        }
-        else if(msg_type = 'MMS'){
-          var bucketParams = {
-            Bucket: process.env.S3_BUCKET_NAME, Key: 'APPS/TEST/MMSTW/'+cust_id+'_20211111_test1.jpg'
-          }
-          s3.getObject(bucketParams, function(err, data){
-            if(err){
-              console.log("Error", err);
-            } else {
-              var attachment = Buffer.from(data.Body, 'utf8').toString('base64');
-              sendMMS(subject, msg, dest, time, attachment);
-              console.log('SEND MMS TO: '+cust_id);
+        switch(msg_type){
+          case 'MMS':
+            var bucketParams = {
+              Bucket: process.env.S3_BUCKET_NAME, Key: 'APPS/TEST/MMSTW/'+cust_id+'_20211111_test1.jpg'
             }
-          });
+            s3.getObject(bucketParams, function(err, data){
+              if(err){
+                console.log("Error", err);
+              } else {
+                var attachment = Buffer.from(data.Body, 'utf8').toString('base64');
+                sendMMS(subject, msg, dest, time, attachment);
+                console.log('SEND MMS TO: '+cust_id);
+              }
+            });
+            break;
+          case 'SMS':
+            sendSMS(subject, msg, dest,time);
+            console.log('SEND SMS TO: '+cust_id);
+            break;
+          default:
+            sendSMS(subject, msg, dest,time);
+            console.log('SEND SMS TO: '+cust_id);
+            break;
         }
       }
     }
